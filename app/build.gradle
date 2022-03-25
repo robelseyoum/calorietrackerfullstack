@@ -1,0 +1,145 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id 'kotlin-android-extensions'
+    id 'androidx.navigation.safeargs'
+    id 'kotlin-allopen'
+}
+
+android {
+    compileSdk 32
+
+    defaultConfig {
+        applicationId "com.example.noteapp"
+        minSdk 21
+        targetSdk 32
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+
+
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'com.google.android.material:material:1.5.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    def fragment = "1.5.0-alpha03"
+    implementation "androidx.fragment:fragment-ktx:$fragment"
+
+    // -- Retrofit2
+    def retrofit2_version = "2.9.0"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit2_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit2_version"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit2_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:4.9.3"
+
+    // -- Room
+    def room_version = "2.4.2"
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    // Kotlin Extensions and Coroutines support for Room
+    implementation "androidx.room:room-ktx:$room_version"
+
+    def hilt = "2.41"
+    implementation "com.google.dagger:hilt-android:$hilt"
+    kapt "com.google.dagger:hilt-compiler:$hilt"
+
+    // jetpack navigation component
+    def nav_version = "2.5.0-alpha03"
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-runtime:$nav_version"
+
+    def material_version = "1.4.0"
+    implementation "com.google.android.material:material:$material_version"
+
+    // Coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2-native-mt'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0'
+
+    // material dialogs
+    def material_dialogs_version = "3.1.0"
+    implementation "com.afollestad.material-dialogs:core:$material_dialogs_version"
+
+
+    //glide
+    def glide_version = "4.12.0"
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+    kapt "com.github.bumptech.glide:compiler:$glide_version"
+
+    def dataStore = "1.0.0"
+    implementation "androidx.datastore:datastore-preferences:$dataStore"
+
+    // Junit5
+    def junit5 = "5.7.0"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junit5"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junit5"
+
+    def espressoCore = "3.4.0"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espressoCore"
+
+    def espressoRules = "1.4.0"
+    androidTestImplementation "androidx.test:rules:$espressoRules"
+
+    def junitKtx = "1.1.3"
+    androidTestImplementation "androidx.test.ext:junit-ktx:$junitKtx"
+
+    //kotlin coroutines play service
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.0"
+
+    //ImagePicker
+    implementation 'com.github.dhaval2404:imagepicker:2.1'
+
+    //DateTimePicker
+    implementation 'com.wdullaer:materialdatetimepicker:4.2.3'
+
+    //Piccasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+    //Pie chart
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    //unit testing
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
+    testImplementation 'android.arch.core:core-testing:1.1.1'
+    androidTestImplementation 'androidx.test:runner:1.4.0'
+    androidTestImplementation 'androidx.test:rules:1.4.0'
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.2'
+    testImplementation 'io.mockk:mockk:1.10.0'
+
+    //swiper
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+
+    //Coli
+    implementation("io.coil-kt:coil:1.4.0")
+}

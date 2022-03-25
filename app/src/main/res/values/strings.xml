@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">CalorieTrackerFullStack</string>
+
+    <dimen name="padding_four_dp">4dp</dimen>
+    <dimen name="margin_button">5dp</dimen>
+    <dimen name="padding_eight_dp">8dp</dimen>
+    <dimen name="padding_default_dp">16dp</dimen>
+    <dimen name="app_bar_layout_height">400dp</dimen>
+    <dimen name="placeholder_title_height_dp">20dp</dimen>
+    <dimen name="padding_three_halves_dp">24dp</dimen>
+    <dimen name="padding_double_three_halves_dp">46dp</dimen>
+    <dimen name="card_view_height">180dp</dimen>
+    <dimen name="pic_card_width">180dp</dimen>
+    <dimen name="card_title_width">70dp</dimen>
+
+
+    <dimen name="padding_halves_sp">16sp</dimen>
+    <dimen name="padding_three_halves_sp">20sp</dimen>
+    <dimen name="box_text_size">18sp</dimen>
+    <dimen name="text_30">30sp</dimen>
+
+    <dimen name="space_300">300dp</dimen>
+    <dimen name="space_50">50dp</dimen>
+    <dimen name="space_80">80dp</dimen>
+    <dimen name="space_24">24dp</dimen>
+    <dimen name="space_60">60dp</dimen>
+    <dimen name="space_20">20dp</dimen>
+    <dimen name="text_16">16sp</dimen>
+    <dimen name="space_32">32dp</dimen>
+    <dimen name="text_25">25sp</dimen>
+    <dimen name="icon_width">330dp</dimen>
+    <dimen name="icon_height">227dp</dimen>
+    <dimen name="space_84">84dp</dimen>
+    <dimen name="space_68">68dp</dimen>
+    <dimen name="space_8">8dp</dimen>
+    <dimen name="space_16">16dp</dimen>
+    <dimen name="space_10">10dp</dimen>
+    <dimen name="space_100">100dp</dimen>
+    <dimen name="space_12">12dp</dimen>
+    <dimen name="space_214">214dp</dimen>
+    <dimen name="space_150">150dp</dimen>
+
+</resources>
