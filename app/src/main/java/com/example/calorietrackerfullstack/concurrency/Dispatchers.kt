@@ -2,6 +2,7 @@ package com.example.calorietrackerfullstack.concurrency
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import javax.inject.Inject
 
 
 interface IAppDispatchers {
@@ -9,7 +10,7 @@ interface IAppDispatchers {
     val io: CoroutineDispatcher
 }
 
-class AppDispatchers : IAppDispatchers {
+class AppDispatchers  @Inject constructor() : IAppDispatchers {
     override val main: CoroutineDispatcher = Dispatchers.Main
     override val io: CoroutineDispatcher = Dispatchers.IO
 }

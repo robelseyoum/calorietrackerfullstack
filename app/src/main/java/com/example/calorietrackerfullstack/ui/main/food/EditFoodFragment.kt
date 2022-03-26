@@ -6,21 +6,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.calorietrackerfullstack.databinding.FragmentFoodBinding
+import com.example.calorietrackerfullstack.data.model.Food
+import com.example.calorietrackerfullstack.databinding.FragmentEditFoodBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FoodFragment : Fragment() {
+class EditFoodFragment: Fragment() {
 
+    private lateinit var docID: String
+    private lateinit var foodItem: Food
+    private lateinit var binding: FragmentEditFoodBinding
     private lateinit var mPhotoUri: Uri
-    private lateinit var binding: FragmentFoodBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        binding = FragmentFoodBinding.inflate(inflater)
+        binding=FragmentEditFoodBinding.inflate(inflater)
         return binding.root
     }
-
 }

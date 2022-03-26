@@ -3,7 +3,7 @@ class Constants {
 
     companion object{
 
-        const val BASE_URL = "http://86eb-82-36-96-41.ngrok.io" //TODO need to change later
+        const val BASE_URL = "http://d052-82-36-96-41.ngrok.io" //TODO need to change later
         const val IMAGE_BASE_URL = "$BASE_URL/images/l/"
 
         const val TAG: String = "AppDebug"
@@ -25,5 +25,8 @@ class Constants {
         const val F_COLLECTION_USER = "Users"
         const val F_FIELD_EMAIL = "Email"
         const val F_FIELD_IS_ADMIN = "isAdmin"
+
+        const val IS_ADMIN = "isAdmin"
+
     }
 }
