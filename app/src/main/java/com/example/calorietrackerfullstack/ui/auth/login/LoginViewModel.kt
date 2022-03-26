@@ -4,13 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.calorietrackerfullstack.concurrency.AppDispatchers
 import com.example.calorietrackerfullstack.concurrency.IAppDispatchers
 import com.example.calorietrackerfullstack.data.model.LoginResponse
+import com.example.calorietrackerfullstack.data.model.User
+import com.example.calorietrackerfullstack.data.model.UserAuth
 import com.example.calorietrackerfullstack.data.repository.auth.IAuthRepository
 import com.example.calorietrackerfullstack.utils.DataResponseStatus
 import com.example.calorietrackerfullstack.utils.DataResponseStatus.*
-import com.example.calorietrackerfullstack.utils.DataResult
 import com.example.calorietrackerfullstack.utils.DataResult.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -29,10 +29,10 @@ class LoginViewModel @Inject constructor(
     private val _dataResponseStatus = MutableLiveData<DataResponseStatus>()
     val dataResponseStatus: LiveData<DataResponseStatus> = _dataResponseStatus
 
-    fun logInUser(username: String, password: String) = viewModelScope.launch {
+    fun logInUser(userAuth: UserAuth) = viewModelScope.launch {
         _dataResponseStatus.value = LOADING
 
-        val result = withContext(appDispatchers.io) { repository.login(username, password) }
+        val result = withContext(appDispatchers.io) { repository.login(userAuth) }
 
         when(result){
             is GenericError -> _dataResponseStatus.value = ERROR

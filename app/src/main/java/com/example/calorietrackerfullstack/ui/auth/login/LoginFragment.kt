@@ -12,8 +12,9 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.calorietrackerfullstack.R
 import com.example.calorietrackerfullstack.data.model.LoginResponse
+import com.example.calorietrackerfullstack.data.model.User
+import com.example.calorietrackerfullstack.data.model.UserAuth
 import com.example.calorietrackerfullstack.databinding.FragmentLoginBinding
-import com.example.calorietrackerfullstack.utils.DataResponseStatus
 import com.example.calorietrackerfullstack.utils.DataResponseStatus.*
 import com.example.calorietrackerfullstack.utils.Prefs
 import com.example.calorietrackerfullstack.utils.isEmailValid
@@ -49,6 +50,8 @@ class LoginFragment : Fragment() {
                 Toast.makeText(context, "loginBtn", Toast.LENGTH_SHORT).show()
                 val email = logEmail.text.toString()
                 val password = logPassword.text.toString()
+                val userCredential = UserAuth(email, password)
+
                 Log.d("loginBtn", email)
                 Log.d("loginBtn", password)
 
@@ -60,7 +63,7 @@ class LoginFragment : Fragment() {
                         textInputPassword.error = getString(R.string.less_password)
                         textInputEmail.error = getString(R.string.invalid_email)
                     } else {
-                        viewModel.logInUser(email, password)
+                        viewModel.logInUser(userCredential)
                         textInputPassword.error = null
                         textInputEmail.error = null
                     }

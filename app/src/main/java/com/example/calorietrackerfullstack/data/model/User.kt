@@ -31,3 +31,9 @@ data class User(
     @SerializedName("userType")
     val userType: Int? = 0
 ): Parcelable
+
+
+data class UserAuth(
+    val userName: String,
+    val userPassword: String,
+)
