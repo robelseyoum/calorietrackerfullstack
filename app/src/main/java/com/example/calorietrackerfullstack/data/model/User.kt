@@ -5,20 +5,20 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class LoginResponse(
+data class AuthResponse(
     @SerializedName("data")
     val data: User,
     @SerializedName("success")
     val success: Boolean
 ): Parcelable
 
-@Parcelize
-data class RegisterResponse(
-    @SerializedName("data")
-    val data: String,
-    @SerializedName("success")
-    val success: Boolean
-): Parcelable
+//@Parcelize
+//data class RegistorResponse(
+//    @SerializedName("data")
+//    val data: String,
+//    @SerializedName("success")
+//    val success: Boolean
+//): Parcelable
 
 @Parcelize
 data class User(

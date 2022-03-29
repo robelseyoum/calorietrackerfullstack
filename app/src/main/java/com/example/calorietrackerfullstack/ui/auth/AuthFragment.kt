@@ -8,11 +8,11 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.calorietrackerfullstack.R
 import com.example.calorietrackerfullstack.databinding.FragmentAuthBinding
+import com.example.calorietrackerfullstack.utils.Prefs
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class AuthFragment : Fragment() {
-
 
     private lateinit var binding: FragmentAuthBinding
 
@@ -27,8 +27,19 @@ class AuthFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        checkIfUserLoggedIn()
         binding.loginBtn.setOnClickListener { navLogin() }
         binding.textSignup.setOnClickListener { navSignup() }
+    }
+
+    private fun checkIfUserLoggedIn() {
+        if (Prefs(context!!).isLoggedIn) {
+            navFoodList()
+        }
+    }
+
+    private fun navFoodList() {
+        findNavController().navigate(R.id.action_authFragment_to_foodListFragment)
     }
 
     private fun navLogin() {

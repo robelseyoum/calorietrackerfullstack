@@ -7,7 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.example.calorietrackerfullstack.R
 import com.example.calorietrackerfullstack.databinding.FragmentCalorieBinding
+import com.example.calorietrackerfullstack.prefs
+import com.example.calorietrackerfullstack.utils.Prefs
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -30,9 +34,9 @@ class FoodListFragment : Fragment()  {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        checkIsAdmin()
+        checkIsAdmin()
 //        setOpenAdminFeatures()
-//        setLogoutFunction()
+        setLogout()
 //        setAddFood()
 //        setHistoryFeature()
 //        getFoodListData(DateUtils.currentDate())
@@ -40,7 +44,26 @@ class FoodListFragment : Fragment()  {
 //        maxCalories()
 //        calculateDailyLimit(DateUtils.currentDate())
 //        attachListOfData()
-        val successUserResponse = FoodListFragmentArgs.fromBundle(requireArguments()).successUserResponse
-        Log.d("FoodListFragment", "$successUserResponse")
+        val userId = Prefs(context!!).userIdPref
+        Log.d("FoodListFragmentUserId", "$userId")
+    }
+
+    private fun checkIsAdmin() {
+        if(Prefs(context!!).isAdminPref == 1){
+            binding.textAdmin.visibility = View.VISIBLE
+        }
+    }
+
+    private fun setLogout() {
+        binding.textLogout.setOnClickListener {
+            prefs.isLoggedIn = false
+            prefs.isAdminPref = 0
+            prefs.userIdPref = 0
+            navToStartScreen()
+        }
+    }
+
+    private fun navToStartScreen() {
+        findNavController().navigate(R.id.action_foodListFragment_to_authFragment)
     }
 }

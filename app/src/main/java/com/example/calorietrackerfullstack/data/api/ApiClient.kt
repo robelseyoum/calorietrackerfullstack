@@ -3,7 +3,6 @@ package com.example.calorietrackerfullstack.data.api
 import com.example.calorietrackerfullstack.data.model.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import retrofit2.Response
 import retrofit2.http.*
 
 interface ApiClient {
@@ -19,19 +18,25 @@ interface ApiClient {
     @FieldMap fields: Map<String, String>
     ): LoginResponse
 
+
+    @POST("food/account/register")
+    @FormUrlEncoded
+    suspend fun register(
+    @Field("username") username: String,
+    @Field("password") password: String,
+    ): RegisterResponse
+
      */
 
     @POST("/food/account/login")
     suspend fun login(
         @Body user: UserAuth
-    ): LoginResponse
+    ): AuthResponse
 
     @POST("food/account/register")
-    @FormUrlEncoded
     suspend fun register(
-        @Field("username") username: String,
-        @Field("password") password: String,
-    ): RegisterResponse
+        @Body user: UserAuth
+    ): AuthResponse
 
     @GET("food/food_list")
     suspend fun getAllFoods(): FoodsResponse

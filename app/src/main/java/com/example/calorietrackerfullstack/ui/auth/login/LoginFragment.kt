@@ -1,18 +1,14 @@
 package com.example.calorietrackerfullstack.ui.auth.login
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.calorietrackerfullstack.R
-import com.example.calorietrackerfullstack.data.model.LoginResponse
-import com.example.calorietrackerfullstack.data.model.User
 import com.example.calorietrackerfullstack.data.model.UserAuth
 import com.example.calorietrackerfullstack.databinding.FragmentLoginBinding
 import com.example.calorietrackerfullstack.utils.DataResponseStatus.*
@@ -47,13 +43,12 @@ class LoginFragment : Fragment() {
     private fun setUpLogin() {
         binding.apply {
             loginBtn.setOnClickListener {
-                Toast.makeText(context, "loginBtn", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(context, "loginBtn", Toast.LENGTH_SHORT).show()
                 val email = logEmail.text.toString()
                 val password = logPassword.text.toString()
                 val userCredential = UserAuth(email, password)
 
-                Log.d("loginBtn", email)
-                Log.d("loginBtn", password)
+//                Log.d("loginBtn", email)
 
                 if (
                     email.isNotEmpty() &&
@@ -76,30 +71,33 @@ class LoginFragment : Fragment() {
         viewModel.currentUser.observe(viewLifecycleOwner, Observer { response ->
             response?.let {
                 if (it.success) {
-                    navFoodList(it)
+                    prefs!!.isLoggedIn = true
+                    prefs!!.isAdminPref = it.data.userType!!
+                    prefs!!.userIdPref = it.data.userId
+                    navFoodList()
                 }
             }
         })
 
         viewModel.dataResponseStatus.observe(viewLifecycleOwner, Observer { status ->
             status?.let {
-            when (it) {
-                LOADING -> {
-                    binding.progressBar.visibility = View.VISIBLE
-                }
-                ERROR -> {
-                    binding.progressBar.visibility = View.GONE
-                }
-                DONE -> {
-                    binding.progressBar.visibility = View.GONE
+                when (it) {
+                    LOADING -> {
+                        binding.progressBar.visibility = View.VISIBLE
+                    }
+                    ERROR -> {
+                        binding.progressBar.visibility = View.GONE
+                    }
+                    DONE -> {
+                        binding.progressBar.visibility = View.GONE
+                    }
                 }
             }
-        }
         })
     }
 
-    private fun navFoodList(loginResponse: LoginResponse) {
-        findNavController().navigate(LoginFragmentDirections.actionToFoodListFragment(loginResponse))
+    private fun navFoodList() {
+        findNavController().navigate(R.id.action_to_foodListFragment)
     }
 
     private fun navSignup() {

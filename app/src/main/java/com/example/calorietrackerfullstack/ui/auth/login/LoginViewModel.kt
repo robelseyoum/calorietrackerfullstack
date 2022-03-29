@@ -5,8 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.calorietrackerfullstack.concurrency.IAppDispatchers
-import com.example.calorietrackerfullstack.data.model.LoginResponse
-import com.example.calorietrackerfullstack.data.model.User
+import com.example.calorietrackerfullstack.data.model.AuthResponse
 import com.example.calorietrackerfullstack.data.model.UserAuth
 import com.example.calorietrackerfullstack.data.repository.auth.IAuthRepository
 import com.example.calorietrackerfullstack.utils.DataResponseStatus
@@ -23,9 +22,8 @@ class LoginViewModel @Inject constructor(
     private val repository: IAuthRepository,
 ) : ViewModel() {
 
-
-    private val _user: MutableLiveData<LoginResponse?> = MutableLiveData()
-    val currentUser: LiveData<LoginResponse?>  = _user
+    private val _user: MutableLiveData<AuthResponse?> = MutableLiveData()
+    val currentUser: LiveData<AuthResponse?>  = _user
     private val _dataResponseStatus = MutableLiveData<DataResponseStatus>()
     val dataResponseStatus: LiveData<DataResponseStatus> = _dataResponseStatus
 
