@@ -27,7 +27,7 @@ import org.junit.runners.JUnit4
 @RunWith(JUnit4::class)
 class LoginViewModelTest {
 
-    private val dispatcher = TestCoroutineDispatcher()
+    private val dispatcher = UnconfinedTestDispatcher()
 
     @get:Rule
     val rule = InstantTaskExecutorRule()
@@ -64,7 +64,6 @@ class LoginViewModelTest {
     }
 
 
-    /******************* TEST for login successfully *************************/
     /***
      * Test cases:
      * Login Successfully
