@@ -73,7 +73,6 @@
         android:text="@string/text_0"
         android:textColor="@color/teal_700"
         android:textSize="@dimen/box_text_size"
-        android:fontFamily="@font/robotomedium"
         app:layout_constraintEnd_toEndOf="@+id/text_sample"
         app:layout_constraintStart_toStartOf="@+id/text_sample"
         app:layout_constraintTop_toBottomOf="@+id/text_sample" />
@@ -86,7 +85,6 @@
         android:text="@string/calories_budget"
         android:textColor="@color/link_blue"
         android:textSize="@dimen/box_text_size"
-        android:fontFamily="@font/robotomedium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/text_sample" />
 
@@ -118,7 +116,6 @@
         android:layout_marginTop="@dimen/space_8"
         android:text="@string/check_history_here"
         android:textSize="@dimen/box_text_size"
-        android:fontFamily="@font/robotomedium"
         android:textColor="@color/orange"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

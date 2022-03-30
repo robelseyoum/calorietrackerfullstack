@@ -10,7 +10,7 @@ interface IAppDispatchers {
     val io: CoroutineDispatcher
 }
 
-class AppDispatchers  @Inject constructor() : IAppDispatchers {
+class AppDispatchers @Inject constructor() : IAppDispatchers {
     override val main: CoroutineDispatcher = Dispatchers.Main
     override val io: CoroutineDispatcher = Dispatchers.IO
 }
