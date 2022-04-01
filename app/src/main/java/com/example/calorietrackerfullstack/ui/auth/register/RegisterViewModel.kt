@@ -8,8 +8,8 @@ import com.example.calorietrackerfullstack.concurrency.IAppDispatchers
 import com.example.calorietrackerfullstack.data.model.AuthResponse
 import com.example.calorietrackerfullstack.data.model.UserAuth
 import com.example.calorietrackerfullstack.data.repository.auth.IAuthRepository
-import com.example.calorietrackerfullstack.utils.DataResponseStatus
 import com.example.calorietrackerfullstack.utils.DataResult
+import com.example.calorietrackerfullstack.utils.DataResult.GenericError
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -22,23 +22,16 @@ class RegisterViewModel @Inject constructor(
 ) : ViewModel() {
 
 
-    private val _authUserSuccess: MutableLiveData<AuthResponse?> = MutableLiveData()
-    val authUserSuccess: LiveData<AuthResponse?> = _authUserSuccess
-    private val _dataResponseStatus = MutableLiveData<DataResponseStatus>()
-    val dataResponseStatus: LiveData<DataResponseStatus> = _dataResponseStatus
+    private val _authUser: MutableLiveData<DataResult<AuthResponse>?> = MutableLiveData()
+    val authUser: LiveData<DataResult<AuthResponse>?> = _authUser
 
     fun setUpRegister(userAuth: UserAuth) = viewModelScope.launch {
-        _dataResponseStatus.value = DataResponseStatus.LOADING
-
         val result = withContext(appDispatchers.io) { repository.register(userAuth) }
 
         when(result){
-            is DataResult.GenericError -> _dataResponseStatus.value = DataResponseStatus.ERROR
-            is DataResult.NetworkError -> _dataResponseStatus.value = DataResponseStatus.ERROR
-            is DataResult.Success -> {
-                _authUserSuccess.value = result.value
-                _dataResponseStatus.value = DataResponseStatus.DONE
-            }
+            is GenericError -> _authUser.value = GenericError(result.code, result.errorMessages)
+            is DataResult.NetworkError -> _authUser.value = DataResult.NetworkError(result.networkError)
+            is DataResult.Success -> _authUser.value = DataResult.Success(result.value!!)
         }
     }
 

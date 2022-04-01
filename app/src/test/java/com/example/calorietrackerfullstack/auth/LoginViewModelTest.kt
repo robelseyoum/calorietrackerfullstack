@@ -7,7 +7,6 @@ import com.example.calorietrackerfullstack.data.model.User
 import com.example.calorietrackerfullstack.data.model.UserAuth
 import com.example.calorietrackerfullstack.data.repository.auth.AuthRepository
 import com.example.calorietrackerfullstack.ui.auth.login.LoginViewModel
-import com.example.calorietrackerfullstack.utils.DataResponseStatus
 import com.example.calorietrackerfullstack.utils.DataResult
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
@@ -73,7 +72,7 @@ class LoginViewModelTest {
         val result = mock<AuthResponse>()
         whenever(repository.login(userCredential)).thenReturn(DataResult.Success(result))
         viewModel.logInUser(userCredential)
-        assertEquals(result, viewModel.currentUser.value)
+        assertEquals(DataResult.Success(result), viewModel.currentUser.value)
     }
 
     /***
@@ -83,9 +82,9 @@ class LoginViewModelTest {
     @Test
     fun `when login it should return throws IOException then it should emit the result as NetworkError`() =
         runTest {
-            whenever(repository.login(userCredential)).thenReturn(DataResult.NetworkError)
+            whenever(repository.login(userCredential)).thenReturn(DataResult.NetworkError("Network error"))
             viewModel.logInUser(userCredential)
-            assertEquals(DataResponseStatus.ERROR, viewModel.dataResponseStatus.value)
+            assertEquals(DataResult.NetworkError("Network error"), viewModel.currentUser.value)
         }
 
 
@@ -103,6 +102,9 @@ class LoginViewModelTest {
                 )
             )
             viewModel.logInUser(userCredential)
-            assertEquals(DataResponseStatus.ERROR, viewModel.dataResponseStatus.value)
+            assertEquals( DataResult.GenericError(
+                433,
+                "error message"
+            ), viewModel.currentUser.value)
         }
 }

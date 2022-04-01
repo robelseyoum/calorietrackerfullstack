@@ -1,4 +1,5 @@
 package com.example.calorietrackerfullstack.utils
+import com.example.calorietrackerfullstack.utils.Constants.Companion.NETWORK_ERROR
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.withContext
@@ -9,10 +10,8 @@ import java.lang.Exception
 sealed class DataResult<out T> {
     data class Success<out T>(val value: T): DataResult<T>()
     data class GenericError(val code: Int? = null, val errorMessages: String? = null): DataResult<Nothing>()
-    object NetworkError : DataResult<Nothing>()
+    data class NetworkError(val networkError: String? = null): DataResult<Nothing>()
 }
-
-enum class DataResponseStatus { LOADING, ERROR, DONE }
 
 suspend fun <T> safeDataResult(
     dispatcher: CoroutineDispatcher,
@@ -36,7 +35,7 @@ suspend fun <T> safeDataResult(
                 }
 
                 is IOException -> {
-                    DataResult.NetworkError
+                    DataResult.NetworkError(NETWORK_ERROR)
                 }
 
                 is HttpException -> {

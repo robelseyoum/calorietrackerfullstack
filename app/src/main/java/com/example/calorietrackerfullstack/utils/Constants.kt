@@ -3,7 +3,7 @@ class Constants {
 
     companion object{
 
-        const val BASE_URL = "https://7e4c-82-36-96-41.ngrok.io" //TODO need to change later
+        const val BASE_URL = "https://5568-82-36-96-41.ngrok.io" //TODO need to change later
         const val IMAGE_BASE_URL = "$BASE_URL/images/l/"
 
         const val TAG: String = "AppDebug"
@@ -17,6 +17,7 @@ class Constants {
         const val PERMISSIONS_REQUEST_READ_STORAGE: Int = 301
         const val BASE_URL_RANDOM_USER = "https://randomuser.me/"
         const val ERROR_UNKNOWN = "Unknown error"
+        const val NETWORK_ERROR= "Network error"
         const val NETWORK_ERROR_UNKNOWN = "Unknown network error"
         const val NETWORK_ERROR_TIMEOUT = "Network timeout"
 

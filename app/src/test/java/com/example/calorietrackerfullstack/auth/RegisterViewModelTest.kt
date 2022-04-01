@@ -7,7 +7,6 @@ import com.example.calorietrackerfullstack.data.model.User
 import com.example.calorietrackerfullstack.data.model.UserAuth
 import com.example.calorietrackerfullstack.data.repository.auth.AuthRepository
 import com.example.calorietrackerfullstack.ui.auth.register.RegisterViewModel
-import com.example.calorietrackerfullstack.utils.DataResponseStatus
 import com.example.calorietrackerfullstack.utils.DataResult
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
@@ -77,7 +76,7 @@ class RegisterViewModelTest {
         val result = mock<AuthResponse>()
         whenever(repository.register(userCredential)).thenReturn(DataResult.Success(result))
         viewModel.setUpRegister(userCredential)
-        assertEquals(result, viewModel.authUserSuccess.value)
+        assertEquals(DataResult.Success(result), viewModel.authUser.value)
     }
 
     /***
@@ -87,9 +86,9 @@ class RegisterViewModelTest {
     @Test
     fun `when register it should return throws IOException then it should emit the result as NetworkError`() =
         runTest {
-            whenever(repository.register(userCredential)).thenReturn(DataResult.NetworkError)
+            whenever(repository.register(userCredential)).thenReturn(DataResult.NetworkError("Network error"))
             viewModel.setUpRegister(userCredential)
-            assertEquals(DataResponseStatus.ERROR, viewModel.dataResponseStatus.value)
+            assertEquals(DataResult.NetworkError("Network error"), viewModel.authUser.value)
         }
 
 
@@ -107,6 +106,9 @@ class RegisterViewModelTest {
                 )
             )
             viewModel.setUpRegister(userCredential)
-            assertEquals(DataResponseStatus.ERROR, viewModel.dataResponseStatus.value)
+            assertEquals( DataResult.GenericError(
+                433,
+                "error message"
+            ), viewModel.authUser.value)
         }
 }
