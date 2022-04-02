@@ -1,24 +1,26 @@
 package com.example.calorietrackerfullstack.data.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
-
-data class LoginResponse(
+@Parcelize
+data class AuthResponse(
     @SerializedName("data")
-    val data: List<User>,
+    val data: User,
     @SerializedName("success")
     val success: Boolean
-)
+): Parcelable
 
+//@Parcelize
+//data class RegistorResponse(
+//    @SerializedName("data")
+//    val data: String,
+//    @SerializedName("success")
+//    val success: Boolean
+//): Parcelable
 
-data class RegisterResponse(
-    @SerializedName("data")
-    val data: String,
-    @SerializedName("success")
-    val success: Boolean
-)
-
-
+@Parcelize
 data class User(
     @SerializedName("userId")
     val userId: Int,
@@ -28,4 +30,10 @@ data class User(
     val userPassword: String,
     @SerializedName("userType")
     val userType: Int? = 0
+): Parcelable
+
+
+data class UserAuth(
+    val userName: String,
+    val userPassword: String,
 )

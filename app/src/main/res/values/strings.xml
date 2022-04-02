@@ -1,43 +1,44 @@
 <resources>
     <string name="app_name">CalorieTrackerFullStack</string>
 
-    <dimen name="padding_four_dp">4dp</dimen>
-    <dimen name="margin_button">5dp</dimen>
-    <dimen name="padding_eight_dp">8dp</dimen>
-    <dimen name="padding_default_dp">16dp</dimen>
-    <dimen name="app_bar_layout_height">400dp</dimen>
-    <dimen name="placeholder_title_height_dp">20dp</dimen>
-    <dimen name="padding_three_halves_dp">24dp</dimen>
-    <dimen name="padding_double_three_halves_dp">46dp</dimen>
-    <dimen name="card_view_height">180dp</dimen>
-    <dimen name="pic_card_width">180dp</dimen>
-    <dimen name="card_title_width">70dp</dimen>
+    <string name="error_message">Oh dear we are unable to fetch random user for you. Maybe your not connected with internet!</string>
+    <string name="retry">Retry</string>
+    <string name="random_user_detail_header">Detail Info about Random User </string>
+    <string name="submit">Submit</string>
+    <string name="Food_Photo">Food Picture</string>
+    <string name="saved_isAdmin">isAdmin</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="don_t_have_account">Don\'t have account</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="already_have_account">Already have account?</string>
+    <string name="sign_in">Sign In</string>
+    <string name="welcome_to_calorie_tracker">Welcome to Calorie Tracker</string>
+    <string name="sandwich_is_a_good_food_and_we_can_eat_it_well">Sandwich is a good food and we can eat it well.</string>
+    <string name="sample_text">1006777667887878787</string>
+    <string name="date_sample">12/12/2022</string>
+    <string name="time_sample">08:30PM</string>
+    <string name="report">Report</string>
+    <string name="back">Back</string>
+    <string name="admin_report">Admin Report</string>
+    <string name="number_of_added_entries_week_before">Number of added entries week before</string>
+    <string name="text_100">100</string>
+    <string name="text_0">0</string>
+    <string name="calories">Calories</string>
+    <string name="date">Date</string>
+    <string name="logout">Logout</string>
+    <string name="admin_panel">Admin Panel</string>
+    <string name="eaten">Eaten</string>
+    <string name="no_food_error">No food is found</string>
+    <string name="calories_budget">Calories Budget</string>
+    <string name="check_history_here">Check History Here</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="text_edit">Edit</string>
+    <string name="text_add">Add</string>
+    <string name="less_password">"Password is less than 6"</string>
+    <string name="invalid_email">"Invalid Email"</string>
 
-
-    <dimen name="padding_halves_sp">16sp</dimen>
-    <dimen name="padding_three_halves_sp">20sp</dimen>
-    <dimen name="box_text_size">18sp</dimen>
-    <dimen name="text_30">30sp</dimen>
-
-    <dimen name="space_300">300dp</dimen>
-    <dimen name="space_50">50dp</dimen>
-    <dimen name="space_80">80dp</dimen>
-    <dimen name="space_24">24dp</dimen>
-    <dimen name="space_60">60dp</dimen>
-    <dimen name="space_20">20dp</dimen>
-    <dimen name="text_16">16sp</dimen>
-    <dimen name="space_32">32dp</dimen>
-    <dimen name="text_25">25sp</dimen>
-    <dimen name="icon_width">330dp</dimen>
-    <dimen name="icon_height">227dp</dimen>
-    <dimen name="space_84">84dp</dimen>
-    <dimen name="space_68">68dp</dimen>
-    <dimen name="space_8">8dp</dimen>
-    <dimen name="space_16">16dp</dimen>
-    <dimen name="space_10">10dp</dimen>
-    <dimen name="space_100">100dp</dimen>
-    <dimen name="space_12">12dp</dimen>
-    <dimen name="space_214">214dp</dimen>
-    <dimen name="space_150">150dp</dimen>
 
 </resources>

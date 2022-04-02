@@ -10,6 +10,8 @@ interface IFoodRepository {
 
     suspend fun getAllFoods(): DataResult<FoodsResponse?>
 
+    suspend fun getFoods(userId: String): DataResult<FoodsResponse?>
+
     suspend fun addFood(
         foodData: HashMap<String, RequestBody>,
         image: MultipartBody.Part

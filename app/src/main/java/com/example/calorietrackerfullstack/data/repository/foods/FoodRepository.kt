@@ -17,6 +17,9 @@ class FoodRepository(
     override suspend fun getAllFoods(): DataResult<FoodsResponse?> =
         safeDataResult(appDispatchers.io) { apiClient.getAllFoods() }
 
+    override suspend fun getFoods(userId: String): DataResult<FoodsResponse?> =
+        safeDataResult(appDispatchers.io) { apiClient.getFoods(userId) }
+
     override suspend fun addFood(
         foodData: HashMap<String, RequestBody>,
         image: MultipartBody.Part
