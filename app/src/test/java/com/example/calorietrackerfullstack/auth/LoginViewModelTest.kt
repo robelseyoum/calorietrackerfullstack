@@ -29,9 +29,6 @@ class LoginViewModelTest {
     private val dispatcher = UnconfinedTestDispatcher()
 
     @get:Rule
-    val rule = InstantTaskExecutorRule()
-
-    @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()
 
     private lateinit var viewModel: LoginViewModel
