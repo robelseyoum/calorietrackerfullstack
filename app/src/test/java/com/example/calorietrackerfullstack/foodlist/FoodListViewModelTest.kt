@@ -44,7 +44,6 @@ class FoodListViewModelTest {
     }
 
 
-
     @After
     fun tearDown() {
         Dispatchers.resetMain()
@@ -81,7 +80,7 @@ class FoodListViewModelTest {
      * Login and throws throws IOException as GenericError
      */
     @Test
-    fun `when Login food it should return throws IOException then it should emit the result as GenericError`() =
+    fun `when getting list of food should return throws IOException then it should emit the result as GenericError`() =
         runTest {
             whenever(repository.getFoods(id)).thenReturn(
                 DataResult.GenericError(
@@ -90,10 +89,12 @@ class FoodListViewModelTest {
                 )
             )
             viewModel.getFoods(id)
-            Assert.assertEquals( DataResult.GenericError(
-                433,
-                "error message"
-            ), viewModel.foodList.value)
+            Assert.assertEquals(
+                DataResult.GenericError(
+                    433,
+                    "error message"
+                ), viewModel.foodList.value
+            )
         }
 
 }

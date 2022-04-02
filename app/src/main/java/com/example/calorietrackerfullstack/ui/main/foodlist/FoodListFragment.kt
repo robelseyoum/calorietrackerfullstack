@@ -107,7 +107,9 @@ class FoodListFragment : Fragment() {
     private fun setupAdaptor(data: List<Food>) {
         binding.recycler.visibility = View.VISIBLE
         val adapter = FoodsListAdapter(data, object : FoodsListAdapter.OnClickListener {
-            override fun onClick(foodData: Food) {}
+            override fun onClick(foodData: Food) {
+                Log.d("onClick", "foods - $foodData")
+            }
         })
         binding.recycler.layoutManager = LinearLayoutManager(context)
         binding.recycler.adapter = adapter

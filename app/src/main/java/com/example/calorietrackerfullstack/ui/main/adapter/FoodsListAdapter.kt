@@ -6,17 +6,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.example.calorietrackerfullstack.R
 import com.example.calorietrackerfullstack.data.model.Food
+import com.example.calorietrackerfullstack.utils.Constants.Companion.IMAGE_BASE_URL
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.food_item_raw.view.*
 
 class FoodsListAdapter(private val foodList: List<Food>, private val listener: OnClickListener) :
     RecyclerView.Adapter<FoodsListAdapter.FoodsListViewHolder>() {
 
-    interface OnClickListener {
-        fun onClick(foodData: Food)
-    }
+    interface OnClickListener { fun onClick(foodData: Food) }
 
     class FoodsListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bind(foodData: Food, listener: OnClickListener) {
@@ -37,9 +37,9 @@ class FoodsListAdapter(private val foodList: List<Food>, private val listener: O
         holder.itemView.tv_date.text = foodList[position].date
         holder.itemView.tv_time.text = foodList[position].time
         holder.itemView.tv_calories.text = foodList[position].calorieValue
-//        if (foodList[position].foodImage.isNotEmpty()) {
-//            Picasso.get().load(foodList[position].foodImage).into(holder.itemView.img_food)
-//        }
+        holder.itemView.img_food.load(
+            "$IMAGE_BASE_URL${foodList[position].foodImage}"
+        ) { placeholder(R.drawable.baseline_photo_24) }
         holder.bind(foodList[position], listener)
     }
 
