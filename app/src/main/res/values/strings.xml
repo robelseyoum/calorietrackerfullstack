@@ -30,6 +30,7 @@
     <string name="logout">Logout</string>
     <string name="admin_panel">Admin Panel</string>
     <string name="eaten">Eaten</string>
+    <string name="no_food_error">No food is found</string>
     <string name="calories_budget">Calories Budget</string>
     <string name="check_history_here">Check History Here</string>
     <!-- TODO: Remove or change this placeholder text -->

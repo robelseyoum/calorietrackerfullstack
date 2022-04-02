@@ -8,6 +8,7 @@ import com.example.calorietrackerfullstack.data.model.UserAuth
 import com.example.calorietrackerfullstack.data.repository.auth.AuthRepository
 import com.example.calorietrackerfullstack.ui.auth.register.RegisterViewModel
 import com.example.calorietrackerfullstack.utils.DataResult
+import com.example.calorietrackerfullstack.utils.DataResult.*
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import io.mockk.MockKAnnotations
@@ -74,9 +75,9 @@ class RegisterViewModelTest {
     @Test
     fun `when register it should return the register success as result`() = runTest {
         val result = mock<AuthResponse>()
-        whenever(repository.register(userCredential)).thenReturn(DataResult.Success(result))
+        whenever(repository.register(userCredential)).thenReturn(Success(result))
         viewModel.setUpRegister(userCredential)
-        assertEquals(DataResult.Success(result), viewModel.authUser.value)
+        assertEquals(Success(result), viewModel.authUser.value)
     }
 
     /***
@@ -86,9 +87,9 @@ class RegisterViewModelTest {
     @Test
     fun `when register it should return throws IOException then it should emit the result as NetworkError`() =
         runTest {
-            whenever(repository.register(userCredential)).thenReturn(DataResult.NetworkError("Network error"))
+            whenever(repository.register(userCredential)).thenReturn(NetworkError("Network error"))
             viewModel.setUpRegister(userCredential)
-            assertEquals(DataResult.NetworkError("Network error"), viewModel.authUser.value)
+            assertEquals(NetworkError("Network error"), viewModel.authUser.value)
         }
 
 
@@ -100,13 +101,13 @@ class RegisterViewModelTest {
     fun `when register food it should return throws IOException then it should emit the result as GenericError`() =
         runTest {
             whenever(repository.register(userCredential)).thenReturn(
-                DataResult.GenericError(
+                GenericError(
                     433,
                     "error message"
                 )
             )
             viewModel.setUpRegister(userCredential)
-            assertEquals( DataResult.GenericError(
+            assertEquals( GenericError(
                 433,
                 "error message"
             ), viewModel.authUser.value)

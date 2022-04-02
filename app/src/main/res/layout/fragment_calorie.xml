@@ -47,9 +47,25 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/space_8"
+        android:visibility="gone"
+        tools:visibility="visible"
         android:background="@color/faded_rose"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_history" />
+
+    <TextView
+        android:id="@+id/text_error"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:padding="@dimen/space_80"
+        android:textAlignment="center"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/space_8"
+        android:text="@string/no_food_error"
+        android:textColor="@color/grey_500"
+        android:textSize="@dimen/text_30"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_history" />
 

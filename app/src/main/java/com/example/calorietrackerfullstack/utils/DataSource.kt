@@ -35,7 +35,8 @@ suspend fun <T> safeDataResult(
                 }
 
                 is IOException -> {
-                    DataResult.NetworkError(NETWORK_ERROR)
+                    val errorResponse = throwable.message
+                    DataResult.NetworkError(errorResponse)
                 }
 
                 is HttpException -> {

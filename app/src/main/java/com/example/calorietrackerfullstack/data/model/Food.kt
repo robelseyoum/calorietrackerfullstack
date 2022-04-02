@@ -20,8 +20,10 @@ data class Food(
 )
 
 data class FoodsResponse(
+    @SerializedName("error")
+    val error: String?,
     @SerializedName("data")
-    val data: List<Food>,
+    val data: List<Food>?,
     @SerializedName("success")
     val success: Boolean
 )

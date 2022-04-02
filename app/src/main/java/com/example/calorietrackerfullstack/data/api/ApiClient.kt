@@ -7,27 +7,6 @@ import retrofit2.http.*
 
 interface ApiClient {
 
-    /**
-
-    @Field("userName") email: String,
-    @Field("userPassword") password: String
-
-    @POST("/food/account/login")
-    @FormUrlEncoded
-    suspend fun login(
-    @FieldMap fields: Map<String, String>
-    ): LoginResponse
-
-
-    @POST("food/account/register")
-    @FormUrlEncoded
-    suspend fun register(
-    @Field("username") username: String,
-    @Field("password") password: String,
-    ): RegisterResponse
-
-     */
-
     @POST("/food/account/login")
     suspend fun login(
         @Body user: UserAuth
@@ -38,8 +17,11 @@ interface ApiClient {
         @Body user: UserAuth
     ): AuthResponse
 
-    @GET("food/food_list")
+    @GET("/food/foods_list")
     suspend fun getAllFoods(): FoodsResponse
+
+    @GET("/food/foods_list/{id}")
+    suspend fun getFoods(@Path("id") id: String): FoodsResponse
 
     @Multipart
     @POST("food/add_food")

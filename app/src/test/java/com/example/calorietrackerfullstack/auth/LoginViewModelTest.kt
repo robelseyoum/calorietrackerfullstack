@@ -7,7 +7,7 @@ import com.example.calorietrackerfullstack.data.model.User
 import com.example.calorietrackerfullstack.data.model.UserAuth
 import com.example.calorietrackerfullstack.data.repository.auth.AuthRepository
 import com.example.calorietrackerfullstack.ui.auth.login.LoginViewModel
-import com.example.calorietrackerfullstack.utils.DataResult
+import com.example.calorietrackerfullstack.utils.DataResult.*
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import io.mockk.MockKAnnotations
@@ -70,9 +70,9 @@ class LoginViewModelTest {
     @Test
     fun `when login it should return the login success as result`() = runTest {
         val result = mock<AuthResponse>()
-        whenever(repository.login(userCredential)).thenReturn(DataResult.Success(result))
+        whenever(repository.login(userCredential)).thenReturn(Success(result))
         viewModel.logInUser(userCredential)
-        assertEquals(DataResult.Success(result), viewModel.currentUser.value)
+        assertEquals(Success(result), viewModel.currentUser.value)
     }
 
     /***
@@ -82,9 +82,9 @@ class LoginViewModelTest {
     @Test
     fun `when login it should return throws IOException then it should emit the result as NetworkError`() =
         runTest {
-            whenever(repository.login(userCredential)).thenReturn(DataResult.NetworkError("Network error"))
+            whenever(repository.login(userCredential)).thenReturn(NetworkError("Network error"))
             viewModel.logInUser(userCredential)
-            assertEquals(DataResult.NetworkError("Network error"), viewModel.currentUser.value)
+            assertEquals(NetworkError("Network error"), viewModel.currentUser.value)
         }
 
 
@@ -96,13 +96,13 @@ class LoginViewModelTest {
     fun `when Login food it should return throws IOException then it should emit the result as GenericError`() =
         runTest {
             whenever(repository.login(userCredential)).thenReturn(
-                DataResult.GenericError(
+                GenericError(
                     433,
                     "error message"
                 )
             )
             viewModel.logInUser(userCredential)
-            assertEquals( DataResult.GenericError(
+            assertEquals( GenericError(
                 433,
                 "error message"
             ), viewModel.currentUser.value)
