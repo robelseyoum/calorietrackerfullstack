@@ -60,7 +60,6 @@ class RegisterFragment : Fragment() {
                         emailTextInput.error = getString(R.string.invalid_email)
                     } else {
                         viewModel.setUpRegister(userCredential)
-                        binding.progressBar.visibility = View.VISIBLE
                         emailTextInput.error = null
                         passwordInput.error = null
                     }
@@ -92,10 +91,8 @@ class RegisterFragment : Fragment() {
                             "Network error message- ${result.networkError}",
                             Toast.LENGTH_SHORT
                         ).show()
-                        binding.progressBar.visibility = View.GONE
                     }
                     is Success -> {
-                        binding.progressBar.visibility = View.GONE
                         if (result.value.success) {
                             prefs!!.isLoggedIn = true
                             prefs!!.isAdminPref = result.value.data.userType!!
@@ -104,6 +101,13 @@ class RegisterFragment : Fragment() {
                         }
                     }
                 }
+            }
+        })
+        viewModel.showProgress.observe(viewLifecycleOwner, Observer { show ->
+            if (show) {
+                binding.progressBar.visibility = View.VISIBLE
+            } else {
+                binding.progressBar.visibility = View.GONE
             }
         })
     }

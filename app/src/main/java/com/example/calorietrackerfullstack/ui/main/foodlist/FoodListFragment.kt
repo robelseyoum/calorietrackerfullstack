@@ -89,7 +89,6 @@ class FoodListFragment : Fragment() {
                         binding.progressBar.visibility = View.GONE
                     }
                     is DataResult.Success -> {
-                        binding.progressBar.visibility = View.GONE
                         if (foods.value.success) {
                             foods.value.data?.let { data ->
                                 setupAdaptor(data)
@@ -98,8 +97,17 @@ class FoodListFragment : Fragment() {
                             binding.textError.visibility = View.VISIBLE
                             binding.recycler.visibility = View.GONE
                         }
+                        binding.progressBar.visibility = View.GONE
                     }
                 }
+            }
+        })
+
+        viewModel.showProgress.observe(viewLifecycleOwner, Observer { show ->
+            if (show) {
+                binding.progressBar.visibility = View.VISIBLE
+            } else {
+                binding.progressBar.visibility = View.GONE
             }
         })
     }
