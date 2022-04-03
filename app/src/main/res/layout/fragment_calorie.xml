@@ -49,6 +49,7 @@
         android:layout_marginTop="@dimen/space_8"
         android:visibility="gone"
         tools:visibility="visible"
+        tools:listitem="@layout/food_item_raw"
         android:background="@color/faded_rose"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
