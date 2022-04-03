@@ -25,13 +25,24 @@ class FoodListViewModel @Inject constructor(
 
     private val _foodList: MutableLiveData<DataResult<FoodsResponse>?> = MutableLiveData()
     val foodList: LiveData<DataResult<FoodsResponse>?> = _foodList
+    val showProgress: MutableLiveData<Boolean> = MutableLiveData()
 
     fun getFoods(userId: String) = viewModelScope.launch {
+        showProgress.value = true
         val result = withContext(appDispatchers.io) { repository.getFoods(userId) }
-        when (result){
-            is GenericError -> _foodList.value = GenericError(result.code, result.errorMessages)
-            is NetworkError -> _foodList.value = NetworkError(result.networkError)
-            is Success -> _foodList.value = Success(result.value!!)
+        when (result) {
+            is GenericError -> {
+                showProgress.value = false
+                _foodList.value = GenericError(result.code, result.errorMessages)
+            }
+            is NetworkError -> {
+                showProgress.value = false
+                _foodList.value = NetworkError(result.networkError)
+            }
+            is Success -> {
+                showProgress.value = false
+                _foodList.value = Success(result.value!!)
+            }
         }
     }
 }

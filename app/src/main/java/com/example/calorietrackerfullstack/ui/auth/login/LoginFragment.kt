@@ -62,7 +62,6 @@ class LoginFragment : Fragment() {
                         textInputEmail.error = getString(R.string.invalid_email)
                     } else {
                         viewModel.logInUser(userCredential)
-                        binding.progressBar.visibility = View.VISIBLE
                         textInputPassword.error = null
                         textInputEmail.error = null
                     }
@@ -80,7 +79,6 @@ class LoginFragment : Fragment() {
                             "LoginFragment",
                             "code- ${result.code} error message- ${result.errorMessages}"
                         )
-                        binding.progressBar.visibility = View.GONE
                         Toast.makeText(
                             context,
                             "GenericError code- ${result.code} error message- ${result.errorMessages}",
@@ -94,10 +92,8 @@ class LoginFragment : Fragment() {
                             "Network error message- ${result.networkError}",
                             Toast.LENGTH_SHORT
                         ).show()
-                        binding.progressBar.visibility = View.GONE
                     }
                     is Success -> {
-                        binding.progressBar.visibility = View.GONE
                         if (result.value.success) {
                             prefs!!.isLoggedIn = true
                             prefs!!.isAdminPref = result.value.data.userType!!
@@ -106,6 +102,13 @@ class LoginFragment : Fragment() {
                         }
                     }
                 }
+            }
+        })
+        viewModel.showProgress.observe(viewLifecycleOwner, Observer { show ->
+            if (show) {
+                binding.progressBar.visibility = View.VISIBLE
+            } else {
+                binding.progressBar.visibility = View.GONE
             }
         })
     }

@@ -27,7 +27,6 @@ class FoodListFragment : Fragment() {
     val maxCaloriesLimit = 2100
     private lateinit var binding: FragmentCalorieBinding
     private val viewModel: FoodListViewModel by viewModels()
-    private lateinit var listAdapter: FoodsListAdapter
 
 
     override fun onCreateView(
@@ -46,7 +45,7 @@ class FoodListFragment : Fragment() {
         checkIsAdmin()
         setOpenAdminFeatures()
         setLogout()
-//        setAddFood()
+        setAddFood()
 //        setHistoryFeature()
 //        getFoodListData(DateUtils.currentDate())
 //        setupPieChart()
@@ -56,6 +55,14 @@ class FoodListFragment : Fragment() {
         getFoodList()
     }
 
+    private fun setAddFood() {
+        binding.fab.setOnClickListener { navAddFood() }
+    }
+
+    private fun navAddFood() {
+        findNavController().navigate(R.id.action_foodListFragment_to_foodFragment)
+    }
+
     private fun getFoodList() {
         val userId = Prefs(context!!).userIdPref
         Log.d("FoodListFragmentUserId", "$userId")
@@ -63,7 +70,6 @@ class FoodListFragment : Fragment() {
     }
 
     private fun attachListOfData() {
-        binding.progressBar.visibility = View.VISIBLE
         viewModel.foodList.observe(viewLifecycleOwner, Observer { response ->
             response?.let { foods ->
                 when (foods) {
@@ -72,7 +78,6 @@ class FoodListFragment : Fragment() {
                             "LoginFragment",
                             "code- ${foods.code} error message- ${foods.errorMessages}"
                         )
-                        binding.progressBar.visibility = View.GONE
                         Toast.makeText(
                             context,
                             "GenericError code- ${foods.code} error message- ${foods.errorMessages}",
@@ -86,10 +91,8 @@ class FoodListFragment : Fragment() {
                             "Network error message- ${foods.networkError}",
                             Toast.LENGTH_SHORT
                         ).show()
-                        binding.progressBar.visibility = View.GONE
                     }
                     is DataResult.Success -> {
-                        binding.progressBar.visibility = View.GONE
                         if (foods.value.success) {
                             foods.value.data?.let { data ->
                                 setupAdaptor(data)
@@ -100,6 +103,14 @@ class FoodListFragment : Fragment() {
                         }
                     }
                 }
+            }
+        })
+
+        viewModel.showProgress.observe(viewLifecycleOwner, Observer { show ->
+            if (show) {
+                binding.progressBar.visibility = View.VISIBLE
+            } else {
+                binding.progressBar.visibility = View.GONE
             }
         })
     }
