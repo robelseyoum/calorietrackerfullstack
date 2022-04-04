@@ -38,9 +38,13 @@ class FoodReportListFragments : Fragment() {
 //        setFoodListFunction()
 //        setReportFunction()
         getAllFoodListData()
+        attachProgressBar()
         attachAllListOfData()
         navBackFoodList()
+        initOnDeleteFood()
+        initEditFood()
     }
+
 
     private fun getAllFoodListData() {
         viewModel.getAllFoods()
@@ -82,7 +86,9 @@ class FoodReportListFragments : Fragment() {
                 }
             }
         })
+    }
 
+    private fun attachProgressBar() {
         viewModel.showProgress.observe(viewLifecycleOwner, Observer { show ->
             if (show) {
                 binding.progressBar.visibility = View.VISIBLE
@@ -96,12 +102,25 @@ class FoodReportListFragments : Fragment() {
         binding.recycler.visibility = View.VISIBLE
         val adapter =
             AdminFoodsListAdapter(data, object : AdminFoodsListAdapter.FoodAdapterListener {
-                override fun onItemSelected(foodData: Food) {
-                    Log.d("onClick", "foods - $foodData")
+                override fun onDeleteClick(foodData: Food) {
+                    Log.d("on__DeleteClick", "foods - $foodData")
+                }
+
+                override fun onEditClick(foodData: Food) {
+                    Log.d("on__EditClick", "foods - $foodData")
+                    findNavController()
+                        .navigate(R.id.action_adminFoodReportListFragments_to_editFoodFragment)
                 }
             })
         binding.recycler.layoutManager = LinearLayoutManager(context)
         binding.recycler.adapter = adapter
+    }
+
+    private fun initEditFood() {
+        //TODO edit food
+    }
+    private fun initOnDeleteFood() {
+        //TODO delete food
     }
 
     private fun navBackFoodList() {
