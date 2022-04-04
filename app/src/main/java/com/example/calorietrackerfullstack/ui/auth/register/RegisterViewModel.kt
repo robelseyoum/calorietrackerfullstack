@@ -24,23 +24,23 @@ class RegisterViewModel @Inject constructor(
 
     private val _authUser: MutableLiveData<DataResult<AuthResponse>?> = MutableLiveData()
     val authUser: LiveData<DataResult<AuthResponse>?> = _authUser
-    val showProgress: MutableLiveData<Boolean> = MutableLiveData()
+    val loading = MutableLiveData<Boolean>()
 
     fun setUpRegister(userAuth: UserAuth) = viewModelScope.launch {
-        showProgress.value = true
+        loading.value = true
         val result = withContext(appDispatchers.io) { repository.register(userAuth) }
 
         when (result) {
             is GenericError -> {
-                showProgress.value = false
+                loading.value = false
                 _authUser.value = GenericError(result.code, result.errorMessages)
             }
             is DataResult.NetworkError -> {
-                showProgress.value = false
+                loading.value = false
                 _authUser.value = DataResult.NetworkError(result.networkError)
             }
             is DataResult.Success -> {
-                showProgress.value = false
+                loading.value = false
                 _authUser.value = DataResult.Success(result.value!!)
             }
         }

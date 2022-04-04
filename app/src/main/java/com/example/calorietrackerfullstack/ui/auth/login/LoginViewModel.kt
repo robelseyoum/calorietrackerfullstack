@@ -23,24 +23,24 @@ class LoginViewModel @Inject constructor(
 
     private val _user: MutableLiveData<DataResult<AuthResponse>?> = MutableLiveData()
     val currentUser: LiveData<DataResult<AuthResponse>?> = _user
-    val showProgress: MutableLiveData<Boolean> = MutableLiveData()
+    val loading = MutableLiveData<Boolean>()
 
     fun logInUser(userAuth: UserAuth) = viewModelScope.launch {
-        showProgress.value = true
+        loading.value = true
         val result = withContext(appDispatchers.io) { repository.login(userAuth) }
 
         when (result) {
             is GenericError -> {
                 _user.value = GenericError(result.code, result.errorMessages)
-                showProgress.value = false
+                loading.value = false
             }
             is NetworkError -> {
-                showProgress.value = false
+                loading.value = false
                 _user.value = NetworkError(result.networkError)
             }
             is Success -> {
                 _user.value = Success(result.value!!)
-                showProgress.value = false
+                loading.value = false
             }
 
         }

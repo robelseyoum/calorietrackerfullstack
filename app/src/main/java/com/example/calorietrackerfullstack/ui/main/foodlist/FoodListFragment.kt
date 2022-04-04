@@ -11,7 +11,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.calorietrackerfullstack.R
 import com.example.calorietrackerfullstack.data.model.Food
 import com.example.calorietrackerfullstack.databinding.FragmentCalorieBinding
@@ -87,8 +86,7 @@ class FoodListFragment : Fragment() {
                     is DataResult.NetworkError -> {
                         Log.d("LoginFragment", "network error message- ${foods.networkError}")
                         Toast.makeText(
-                            context,
-                            "Network error message- ${foods.networkError}",
+                            context, "Network error message- ${foods.networkError}",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
@@ -106,7 +104,7 @@ class FoodListFragment : Fragment() {
             }
         })
 
-        viewModel.showProgress.observe(viewLifecycleOwner, Observer { show ->
+        viewModel.loading.observe(viewLifecycleOwner, Observer { show ->
             if (show) {
                 binding.progressBar.visibility = View.VISIBLE
             } else {

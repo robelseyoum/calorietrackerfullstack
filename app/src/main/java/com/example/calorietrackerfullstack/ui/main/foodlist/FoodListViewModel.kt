@@ -5,8 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.calorietrackerfullstack.concurrency.IAppDispatchers
-import com.example.calorietrackerfullstack.data.model.AuthResponse
-import com.example.calorietrackerfullstack.data.model.FoodResponse
 import com.example.calorietrackerfullstack.data.model.FoodsResponse
 import com.example.calorietrackerfullstack.data.repository.foods.IFoodRepository
 import com.example.calorietrackerfullstack.utils.DataResult
@@ -25,22 +23,22 @@ class FoodListViewModel @Inject constructor(
 
     private val _foodList: MutableLiveData<DataResult<FoodsResponse>?> = MutableLiveData()
     val foodList: LiveData<DataResult<FoodsResponse>?> = _foodList
-    val showProgress: MutableLiveData<Boolean> = MutableLiveData()
+    val loading = MutableLiveData<Boolean>()
 
     fun getFoods(userId: String) = viewModelScope.launch {
-        showProgress.value = true
+        loading.value = true
         val result = withContext(appDispatchers.io) { repository.getFoods(userId) }
         when (result) {
             is GenericError -> {
-                showProgress.value = false
+                loading.value = false
                 _foodList.value = GenericError(result.code, result.errorMessages)
             }
             is NetworkError -> {
-                showProgress.value = false
+                loading.value = false
                 _foodList.value = NetworkError(result.networkError)
             }
             is Success -> {
-                showProgress.value = false
+                loading.value = false
                 _foodList.value = Success(result.value!!)
             }
         }

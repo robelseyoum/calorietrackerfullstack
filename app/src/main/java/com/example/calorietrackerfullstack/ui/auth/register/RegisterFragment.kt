@@ -103,7 +103,7 @@ class RegisterFragment : Fragment() {
                 }
             }
         })
-        viewModel.showProgress.observe(viewLifecycleOwner, Observer { show ->
+        viewModel.loading.observe(viewLifecycleOwner, Observer { show ->
             if (show) {
                 binding.progressBar.visibility = View.VISIBLE
             } else {

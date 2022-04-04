@@ -36,15 +36,13 @@ class FoodReportListFragments : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 //        setFoodListFunction()
-//        setReportFunction()
+        setReportFunction()
         getAllFoodListData()
         attachProgressBar()
         attachAllListOfData()
         navBackFoodList()
-        initOnDeleteFood()
-        initEditFood()
+        attachOnDeleteFood()
     }
-
 
     private fun getAllFoodListData() {
         viewModel.getAllFoods()
@@ -89,7 +87,7 @@ class FoodReportListFragments : Fragment() {
     }
 
     private fun attachProgressBar() {
-        viewModel.showProgress.observe(viewLifecycleOwner, Observer { show ->
+        viewModel.loading.observe(viewLifecycleOwner, Observer { show ->
             if (show) {
                 binding.progressBar.visibility = View.VISIBLE
             } else {
@@ -102,25 +100,69 @@ class FoodReportListFragments : Fragment() {
         binding.recycler.visibility = View.VISIBLE
         val adapter =
             AdminFoodsListAdapter(data, object : AdminFoodsListAdapter.FoodAdapterListener {
-                override fun onDeleteClick(foodData: Food) {
-                    Log.d("on__DeleteClick", "foods - $foodData")
+                override fun onDeleteClick(id: String) {
+                    Log.d("on__DeleteClick", "foods - $id")
+                    viewModel.deleteFood(id)
                 }
 
                 override fun onEditClick(foodData: Food) {
                     Log.d("on__EditClick", "foods - $foodData")
-                    findNavController()
-                        .navigate(R.id.action_adminFoodReportListFragments_to_editFoodFragment)
+                    goToEditFragment(foodData)
                 }
             })
         binding.recycler.layoutManager = LinearLayoutManager(context)
         binding.recycler.adapter = adapter
     }
 
-    private fun initEditFood() {
-        //TODO edit food
+    private fun goToEditFragment(foodData: Food) {
+        val bundle = Bundle()
+        bundle.putParcelable("Food", foodData)
+        navToEditFood(bundle)
     }
-    private fun initOnDeleteFood() {
-        //TODO delete food
+
+    private fun attachOnDeleteFood() {
+        viewModel.foodDeleteStatus.observe(viewLifecycleOwner, Observer { response ->
+            response?.let { delete ->
+                when (delete) {
+                    is DataResult.GenericError -> {
+                        Log.d(
+                            "LoginFragment",
+                            "code- ${delete.code} error message- ${delete.errorMessages}"
+                        )
+                        Toast.makeText(
+                            context,
+                            "GenericError code- ${delete.code} error message- ${delete.errorMessages}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    is DataResult.NetworkError -> {
+                        Log.d("LoginFragment", "network error message- ${delete.networkError}")
+                        Toast.makeText(
+                            context,
+                            "Network error message- ${delete.networkError}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    is DataResult.Success -> {
+                        if (delete.value.success) {
+                            viewModel.getAllFoods()
+                        } else {
+                            binding.textError.visibility = View.VISIBLE
+                            binding.recycler.visibility = View.GONE
+                        }
+                    }
+                }
+            }
+        })
+    }
+
+    private fun setReportFunction() {
+        binding.apply { textReport.setOnClickListener { navToReport() } }
+    }
+
+    private fun navToEditFood(bundle: Bundle) {
+        findNavController()
+            .navigate(R.id.action_adminFoodReportListFragments_to_editFoodFragment, bundle)
     }
 
     private fun navBackFoodList() {
@@ -131,4 +173,7 @@ class FoodReportListFragments : Fragment() {
         findNavController().navigate(R.id.action_adminFoodReportListFragments_to_foodListFragment)
     }
 
+    private fun navToReport() {
+        findNavController().navigate(R.id.action_adminFoodReportListFragments_to_reportFragment)
+    }
 }
