@@ -13,7 +13,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.calorietrackerfullstack.R
 import com.example.calorietrackerfullstack.data.model.UserAuth
 import com.example.calorietrackerfullstack.databinding.FragmentLoginBinding
-import com.example.calorietrackerfullstack.utils.DataResult
 import com.example.calorietrackerfullstack.utils.DataResult.*
 import com.example.calorietrackerfullstack.utils.Prefs
 import com.example.calorietrackerfullstack.utils.isEmailValid
@@ -104,7 +103,7 @@ class LoginFragment : Fragment() {
                 }
             }
         })
-        viewModel.showProgress.observe(viewLifecycleOwner, Observer { show ->
+        viewModel.loading.observe(viewLifecycleOwner, Observer { show ->
             if (show) {
                 binding.progressBar.visibility = View.VISIBLE
             } else {

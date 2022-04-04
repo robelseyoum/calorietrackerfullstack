@@ -26,4 +26,6 @@ class FoodRepository(
     ): DataResult<FoodResponse?> =
         safeDataResult(appDispatchers.io) { apiClient.addFoods(foodData, image) }
 
+    override suspend fun deleteFood(id: String): DataResult<FoodResponse?> =
+        safeDataResult(appDispatchers.io) { apiClient.deleteFood(id)}
 }

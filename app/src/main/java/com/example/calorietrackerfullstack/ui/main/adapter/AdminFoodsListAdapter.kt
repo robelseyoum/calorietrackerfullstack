@@ -1,6 +1,5 @@
 package com.example.calorietrackerfullstack.ui.main.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,13 +19,13 @@ class AdminFoodsListAdapter(private val foodList: List<Food>, private val listen
     RecyclerView.Adapter<AdminFoodsListAdapter.AdminFoodsListViewHolder>() {
 
     interface FoodAdapterListener {
-        fun onDeleteClick(foodData: Food)
+        fun onDeleteClick(foodData: String)
         fun onEditClick(foodData: Food)
     }
 
     class AdminFoodsListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bind(foodData: Food, listener: FoodAdapterListener) {
-            itemView.btn_delete.setOnClickListener { listener.onDeleteClick(foodData) }
+            itemView.btn_delete.setOnClickListener { listener.onDeleteClick(foodData.foodId.toString()) }
             itemView.btn_edit.setOnClickListener { listener.onEditClick(foodData) }
         }
     }

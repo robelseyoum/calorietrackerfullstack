@@ -16,4 +16,6 @@ interface IFoodRepository {
         foodData: HashMap<String, RequestBody>,
         image: MultipartBody.Part
     ): DataResult<FoodResponse?>
+
+    suspend fun deleteFood(id: String) : DataResult<FoodResponse?>
 }

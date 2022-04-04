@@ -1,7 +1,11 @@
 package com.example.calorietrackerfullstack.data.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+
+@Parcelize
 data class Food(
     @SerializedName("foodId")
     val foodId: Int,
@@ -17,7 +21,7 @@ data class Food(
     val foodImage: String,
     @SerializedName("userId")
     val userId: String
-)
+): Parcelable
 
 data class FoodsResponse(
     @SerializedName("error")

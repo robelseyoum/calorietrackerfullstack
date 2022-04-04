@@ -3,6 +3,7 @@ package com.example.calorietrackerfullstack.data.api
 import com.example.calorietrackerfullstack.data.model.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import retrofit2.Response
 import retrofit2.http.*
 
 interface ApiClient {
@@ -30,5 +31,7 @@ interface ApiClient {
         @Part image: MultipartBody.Part
     ): FoodResponse
 
+    @DELETE("food/food_delete/{id}")
+    suspend fun deleteFood(@Path("id") id: String): FoodResponse
 
 }
