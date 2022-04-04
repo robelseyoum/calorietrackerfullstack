@@ -19,18 +19,15 @@ import kotlinx.android.synthetic.main.item_admin_food_list.view.*
 class AdminFoodsListAdapter(private val foodList: List<Food>, private val listener: FoodAdapterListener) :
     RecyclerView.Adapter<AdminFoodsListAdapter.AdminFoodsListViewHolder>() {
 
-    interface FoodAdapterListener { fun onItemSelected(foodData: Food) }
+    interface FoodAdapterListener {
+        fun onDeleteClick(foodData: Food)
+        fun onEditClick(foodData: Food)
+    }
 
     class AdminFoodsListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bind(foodData: Food, listener: FoodAdapterListener) {
-            itemView.btn_delete.setOnClickListener {
-                //TODO delete
-                Log.d("AdminFoodsList_delete","$foodData")
-            }
-            itemView.btn_edit.setOnClickListener {
-                Log.d("AdminFoodsList_edit","$foodData")
-                //TODO delete
-            }
+            itemView.btn_delete.setOnClickListener { listener.onDeleteClick(foodData) }
+            itemView.btn_edit.setOnClickListener { listener.onEditClick(foodData) }
         }
     }
 
