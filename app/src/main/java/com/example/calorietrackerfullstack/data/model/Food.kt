@@ -38,3 +38,4 @@ data class FoodResponse(
     @SerializedName("success")
     val success: Boolean
 )
+

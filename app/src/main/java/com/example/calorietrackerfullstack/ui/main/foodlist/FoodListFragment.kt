@@ -18,6 +18,7 @@ import com.example.calorietrackerfullstack.prefs
 import com.example.calorietrackerfullstack.ui.main.adapter.FoodsListAdapter
 import com.example.calorietrackerfullstack.utils.DataResult
 import com.example.calorietrackerfullstack.utils.Prefs
+import com.example.calorietrackerfullstack.utils.show
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,7 +27,8 @@ class FoodListFragment : Fragment() {
     val maxCaloriesLimit = 2100
     private lateinit var binding: FragmentCalorieBinding
     private val viewModel: FoodListViewModel by viewModels()
-
+    val bundle = Bundle()
+    var userId: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,7 +42,7 @@ class FoodListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        getUserId()
         checkIsAdmin()
         setOpenAdminFeatures()
         setLogout()
@@ -52,6 +54,11 @@ class FoodListFragment : Fragment() {
 //        calculateDailyLimit(DateUtils.currentDate())
         attachListOfData()
         getFoodList()
+        attachProgressBar()
+    }
+
+    private fun getUserId() {
+        userId = Prefs(context!!).userIdPref
     }
 
     private fun setAddFood() {
@@ -59,12 +66,11 @@ class FoodListFragment : Fragment() {
     }
 
     private fun navAddFood() {
-        findNavController().navigate(R.id.action_foodListFragment_to_foodFragment)
+        bundle.putString(USER_ID, userId.toString())
+        findNavController().navigate(R.id.action_foodListFragment_to_foodFragment, bundle)
     }
 
     private fun getFoodList() {
-        val userId = Prefs(context!!).userIdPref
-        Log.d("FoodListFragmentUserId", "$userId")
         viewModel.getFoods(userId.toString())
     }
 
@@ -103,13 +109,11 @@ class FoodListFragment : Fragment() {
                 }
             }
         })
+    }
 
+    private fun attachProgressBar() {
         viewModel.loading.observe(viewLifecycleOwner, Observer { show ->
-            if (show) {
-                binding.progressBar.visibility = View.VISIBLE
-            } else {
-                binding.progressBar.visibility = View.GONE
-            }
+            binding.progressBar.show(show)
         })
     }
 
@@ -151,3 +155,6 @@ class FoodListFragment : Fragment() {
         findNavController().navigate(R.id.action_foodListFragment_to_adminFoodReportListFragments)
     }
 }
+
+
+const val USER_ID = "USER_ID"

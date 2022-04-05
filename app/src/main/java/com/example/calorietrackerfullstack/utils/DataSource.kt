@@ -41,10 +41,7 @@ suspend fun <T> safeDataResult(
 
                 is HttpException -> {
                     val code = throwable.code()
-                    val errorResponse =
-                        convertErrorBody(
-                            throwable
-                        )
+                    val errorResponse = throwable.message
                     DataResult.GenericError(
                         code,
                         errorResponse

@@ -19,7 +19,6 @@ import kotlinx.android.synthetic.main.item_admin_food_list.*
 @AndroidEntryPoint
 class EditFoodFragment : Fragment() {
 
-    private lateinit var docID: String
     private lateinit var foodItem: Food
     private lateinit var binding: FragmentEditFoodBinding
     private lateinit var mPhotoUri: Uri
@@ -35,8 +34,12 @@ class EditFoodFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navBack()
-        arguments?.let { arg -> foodItem = (arg["Food"] as Food) }
+        getFoodData()
         setFoodData()
+    }
+
+    private fun getFoodData() {
+        arguments?.let { arg -> foodItem = (arg[FOOD] as Food) }
     }
 
     private fun setFoodData() {
@@ -61,3 +64,5 @@ class EditFoodFragment : Fragment() {
         }
     }
 }
+
+const val FOOD = "FOOD"
