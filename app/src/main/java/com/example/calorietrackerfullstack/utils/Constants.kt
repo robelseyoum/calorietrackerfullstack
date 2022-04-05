@@ -3,7 +3,7 @@ class Constants {
 
     companion object{
 
-        const val BASE_URL = "https://b36b-82-36-96-41.ngrok.io" //TODO need to change later
+        const val BASE_URL = "https://6a63-82-36-96-41.ngrok.io" //TODO need to change later
         const val IMAGE_BASE_URL = "$BASE_URL/images/l/"
 
         const val TAG: String = "AppDebug"

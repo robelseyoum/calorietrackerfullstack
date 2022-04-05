@@ -16,6 +16,7 @@ import com.example.calorietrackerfullstack.data.model.Food
 import com.example.calorietrackerfullstack.databinding.FragmentFoodReportListBinding
 import com.example.calorietrackerfullstack.ui.main.adapter.AdminFoodsListAdapter
 import com.example.calorietrackerfullstack.utils.DataResult
+import com.example.calorietrackerfullstack.utils.show
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -38,7 +39,6 @@ class FoodReportListFragments : Fragment() {
 //        setFoodListFunction()
         setReportFunction()
         getAllFoodListData()
-        attachProgressBar()
         attachAllListOfData()
         navBackFoodList()
         attachOnDeleteFood()
@@ -46,6 +46,7 @@ class FoodReportListFragments : Fragment() {
 
     private fun getAllFoodListData() {
         viewModel.getAllFoods()
+        attachProgressBar()
     }
 
     private fun attachAllListOfData() {
@@ -88,11 +89,7 @@ class FoodReportListFragments : Fragment() {
 
     private fun attachProgressBar() {
         viewModel.loading.observe(viewLifecycleOwner, Observer { show ->
-            if (show) {
-                binding.progressBar.visibility = View.VISIBLE
-            } else {
-                binding.progressBar.visibility = View.GONE
-            }
+            binding.progressBar.show(show)
         })
     }
 
@@ -116,7 +113,7 @@ class FoodReportListFragments : Fragment() {
 
     private fun goToEditFragment(foodData: Food) {
         val bundle = Bundle()
-        bundle.putParcelable("Food", foodData)
+        bundle.putParcelable(FOOD, foodData)
         navToEditFood(bundle)
     }
 
@@ -177,3 +174,4 @@ class FoodReportListFragments : Fragment() {
         findNavController().navigate(R.id.action_adminFoodReportListFragments_to_reportFragment)
     }
 }
+const val FOOD = "FOOD"

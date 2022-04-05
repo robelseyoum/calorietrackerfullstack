@@ -16,6 +16,7 @@ import com.example.calorietrackerfullstack.databinding.FragmentRegisterBinding
 import com.example.calorietrackerfullstack.utils.DataResult.*
 import com.example.calorietrackerfullstack.utils.Prefs
 import com.example.calorietrackerfullstack.utils.isEmailValid
+import com.example.calorietrackerfullstack.utils.show
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -41,6 +42,7 @@ class RegisterFragment : Fragment() {
         setUpRegister()
         attachRegisterAuth()
         backNav()
+        attachProgressBar()
     }
 
 
@@ -103,15 +105,13 @@ class RegisterFragment : Fragment() {
                 }
             }
         })
-        viewModel.loading.observe(viewLifecycleOwner, Observer { show ->
-            if (show) {
-                binding.progressBar.visibility = View.VISIBLE
-            } else {
-                binding.progressBar.visibility = View.GONE
-            }
-        })
     }
 
+    private fun attachProgressBar() {
+        viewModel.loading.observe(viewLifecycleOwner, Observer { show ->
+            binding.progressBar.show(show)
+        })
+    }
 
     private fun backNav() {
         binding.textBack.setOnClickListener {
