@@ -24,8 +24,7 @@ class FoodViewModel @Inject constructor(
 
     private val _addFoodStatus: MutableLiveData<DataResult<FoodResponse>?> = MutableLiveData()
     val addFoodStatus: LiveData<DataResult<FoodResponse>?> = _addFoodStatus
-    val loading: MutableLiveData<Boolean> = MutableLiveData()
-
+    val loading = MutableLiveData<Boolean>()
 
     fun addFood(
         foodData: HashMap<String, RequestBody>,
