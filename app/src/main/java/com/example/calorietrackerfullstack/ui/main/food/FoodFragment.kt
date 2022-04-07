@@ -43,7 +43,6 @@ class FoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
     private lateinit var binding: FragmentFoodBinding
     private lateinit var mImageUri: Uri
     private lateinit var userID: String
-    private lateinit var dialog: AlertDialog
     private val viewModel: FoodViewModel by viewModels()
     private lateinit var startForSelectImageResult: ActivityResultLauncher<Intent>
 
@@ -67,8 +66,8 @@ class FoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
         setUpAddFood()
         setUpAddImage()
         attachAddFoodData()
-        attachProgressBar()
         getUserID()
+        attachProgressBar()
     }
 
     private fun getUserID() {
