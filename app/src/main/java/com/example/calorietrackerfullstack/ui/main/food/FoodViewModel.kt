@@ -48,4 +48,19 @@ class FoodViewModel @Inject constructor(
         }
     }
 
+    fun editFood(id: String) = viewModelScope.launch {
+        loading.value = true
+        val result = withContext(appDispatchers.io) { repository.editFood(id) }
+        when (result) {
+            is DataResult.GenericError -> {
+                loading.value = false
+            }
+            is DataResult.NetworkError -> {
+                loading.value = false
+            }
+            is DataResult.Success -> {
+                loading.value = false
+            }
+        }
+    }
 }
