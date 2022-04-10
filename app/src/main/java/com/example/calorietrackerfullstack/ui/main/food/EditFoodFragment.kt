@@ -105,8 +105,13 @@ class EditFoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
 
     private fun getImage(): MultipartBody.Part {
         context!!.contentResolver.openInputStream(mPhotoUri)
-        Log.d("TAG", "getImage: $mPhotoUri ${mPhotoUri.path}")
-        return File(mPhotoUri.getFilePath(context!!)).fileToMultiPart("foodImage")
+        if (this::mPhotoUri.isInitialized) {
+            if (mPhotoUri.toString().isNotEmpty()) {
+                Log.d("TAG", "getImage: $mPhotoUri ${mPhotoUri.path}")
+                return File(mPhotoUri.getFilePath(context!!)).fileToMultiPart("foodImage")
+            }
+        }
+        return MultipartBody.Part
     }
 
     private fun updateFood() {
@@ -135,7 +140,10 @@ class EditFoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
                         ).show()
                     }
                     is DataResult.NetworkError -> {
-                        Log.d("EditFoodFragment", "network error message- ${result.networkError}")
+                        Log.d(
+                            "EditFoodFragment",
+                            "network error message- ${result.networkError}"
+                        )
                         Toast.makeText(
                             context,
                             "Network error message- ${result.networkError}",
@@ -160,7 +168,7 @@ class EditFoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
 
     /******************************
      * ****************************
-     * *******Permission Stuff *****
+     * ******* Permission Stuff ***
      * ****************************
      * ****************************
      * */
@@ -236,8 +244,7 @@ class EditFoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
 
     private fun initLauncher() {
         startForSelectImageResult =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-                    result: ActivityResult ->
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
                 val resultCode = result.resultCode
                 val data = result.data
                 when (resultCode) {
@@ -291,7 +298,12 @@ class EditFoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
         binding.etTime.setText(time)
     }
 
-    override fun onDateSet(view: DatePickerDialog?, year: Int, monthOfYear: Int, dayOfMonth: Int) {
+    override fun onDateSet(
+        view: DatePickerDialog?,
+        year: Int,
+        monthOfYear: Int,
+        dayOfMonth: Int
+    ) {
         val date = dayOfMonth.toString() + SLASH + (monthOfYear + 1) + SLASH + year
         binding.etDate.setText(date)
     }
