@@ -10,7 +10,11 @@ interface IFoodRepository {
 
     suspend fun getAllFoods(): DataResult<FoodsResponse?>
 
-    suspend fun editFood(foodId : String): DataResult<FoodsResponse?>
+    suspend fun editFood(
+        foodId: String,
+        foodData: HashMap<String, RequestBody>,
+        image: MultipartBody.Part
+    ): DataResult<FoodResponse?>
 
     suspend fun getFoods(userId: String): DataResult<FoodsResponse?>
 
@@ -19,5 +23,5 @@ interface IFoodRepository {
         image: MultipartBody.Part
     ): DataResult<FoodResponse?>
 
-    suspend fun deleteFood(id: String) : DataResult<FoodResponse?>
+    suspend fun deleteFood(id: String): DataResult<FoodResponse?>
 }

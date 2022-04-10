@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".feature.main.food.EditFoodFragment">
+    tools:context="com.example.calorietrackerfullstack.ui.main.food.EditFoodFragment">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -126,7 +126,6 @@
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab_add_gallery_photo"
                 style="@style/FabStyle"
-                android:onClick="dialog_fun"
                 app:srcCompat="@drawable/baseline_photo_24" />
 
         </androidx.cardview.widget.CardView>
@@ -198,7 +197,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/textInputPassword"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"

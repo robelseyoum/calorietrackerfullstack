@@ -24,6 +24,8 @@ class FoodViewModel @Inject constructor(
 
     private val _addFoodStatus: MutableLiveData<DataResult<FoodResponse>?> = MutableLiveData()
     val addFoodStatus: LiveData<DataResult<FoodResponse>?> = _addFoodStatus
+    private val _updateFoodStatus: MutableLiveData<DataResult<FoodResponse>?> = MutableLiveData()
+    val updateFoodStatus: LiveData<DataResult<FoodResponse>?> = _updateFoodStatus
     val loading = MutableLiveData<Boolean>()
 
     fun addFood(
@@ -48,18 +50,25 @@ class FoodViewModel @Inject constructor(
         }
     }
 
-    fun editFood(id: String) = viewModelScope.launch {
+    fun editFood(
+        id: String,
+        foodData: HashMap<String, RequestBody>,
+        image: MultipartBody.Part
+    ) = viewModelScope.launch {
         loading.value = true
-        val result = withContext(appDispatchers.io) { repository.editFood(id) }
+        val result = withContext(appDispatchers.io) { repository.editFood(id, foodData, image) }
         when (result) {
             is DataResult.GenericError -> {
                 loading.value = false
+                _updateFoodStatus.value = DataResult.GenericError(result.code, result.errorMessages)
             }
             is DataResult.NetworkError -> {
                 loading.value = false
+                _updateFoodStatus.value = DataResult.NetworkError(result.networkError)
             }
             is DataResult.Success -> {
                 loading.value = false
+                _updateFoodStatus.value = DataResult.Success(result.value!!)
             }
         }
     }

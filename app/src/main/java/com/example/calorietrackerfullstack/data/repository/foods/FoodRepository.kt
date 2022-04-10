@@ -17,6 +17,13 @@ class FoodRepository(
     override suspend fun getAllFoods(): DataResult<FoodsResponse?> =
         safeDataResult(appDispatchers.io) { apiClient.getAllFoods() }
 
+    override suspend fun editFood(
+        foodId: String,
+        foodData: HashMap<String, RequestBody>,
+        image: MultipartBody.Part
+    ): DataResult<FoodResponse?> =
+        safeDataResult(appDispatchers.io) { apiClient.editFood(foodId, foodData, image) }
+
     override suspend fun getFoods(userId: String): DataResult<FoodsResponse?> =
         safeDataResult(appDispatchers.io) { apiClient.getFoods(userId) }
 
@@ -24,8 +31,8 @@ class FoodRepository(
         foodData: HashMap<String, RequestBody>,
         image: MultipartBody.Part
     ): DataResult<FoodResponse?> =
-        safeDataResult(appDispatchers.io) { apiClient.addFoods(foodData, image) }
+        safeDataResult(appDispatchers.io) { apiClient.addFood(foodData, image) }
 
     override suspend fun deleteFood(id: String): DataResult<FoodResponse?> =
-        safeDataResult(appDispatchers.io) { apiClient.deleteFood(id)}
+        safeDataResult(appDispatchers.io) { apiClient.deleteFood(id) }
 }
