@@ -13,7 +13,6 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -21,7 +20,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.calorietrackerfullstack.R
-import com.example.calorietrackerfullstack.data.model.Food
 import com.example.calorietrackerfullstack.databinding.FragmentFoodBinding
 import com.example.calorietrackerfullstack.ui.main.foodlist.USER_ID
 import com.example.calorietrackerfullstack.utils.*
@@ -77,13 +75,13 @@ class FoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
     private fun setUpAddFood() {
         binding.submitBtn.setOnClickListener {
             viewModel.addFood(
-                getDataFromUi(),
+                getFoodUI(),
                 getImage()
             )
         }
     }
 
-    private fun getDataFromUi(): HashMap<String, RequestBody> {
+    private fun getFoodUI(): HashMap<String, RequestBody> {
         binding.apply {
             val food = etFoodName.text.toString()
             val calories = etCaloriesValue.text.toString()
@@ -202,7 +200,6 @@ class FoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
             } else {
                 unAvailableFeature()
             }
-
         }
 
     private fun unAvailableFeature() {

@@ -125,7 +125,6 @@
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab_add_gallery_photo"
                 style="@style/FabStyle"
-                android:onClick="dialog_fun"
                 app:srcCompat="@drawable/baseline_photo_24" />
 
         </androidx.cardview.widget.CardView>

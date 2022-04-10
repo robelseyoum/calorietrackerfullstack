@@ -21,7 +21,7 @@ data class Food(
     val foodImage: String,
     @SerializedName("userId")
     val userId: String
-): Parcelable
+) : Parcelable
 
 data class FoodsResponse(
     @SerializedName("error")
@@ -37,5 +37,15 @@ data class FoodResponse(
     val data: String,
     @SerializedName("success")
     val success: Boolean
+)
+
+data class FoodRequest(
+    val foodId: Int,
+    val foodName: String,
+    val calorieValue: String,
+    val date: String,
+    val time: String,
+    val foodImage: String,
+    val userId: String
 )
 

@@ -25,13 +25,24 @@ interface ApiClient {
     suspend fun getFoods(@Path("id") id: String): FoodsResponse
 
     @Multipart
+    @PUT( "food/food_update/{id}")
+    fun editFood(
+        @Path("id") id: String,
+        @PartMap foodData: HashMap<String, RequestBody>,
+        @Part image: MultipartBody.Part
+    ): FoodResponse
+
+    @Multipart
     @POST("food/add_food")
-    suspend fun addFoods(
+    suspend fun addFood(
         @PartMap foodData: HashMap<String, RequestBody>,
         @Part image: MultipartBody.Part
     ): FoodResponse
 
     @DELETE("food/food_delete/{id}")
     suspend fun deleteFood(@Path("id") id: String): FoodResponse
+
+
+
 
 }
