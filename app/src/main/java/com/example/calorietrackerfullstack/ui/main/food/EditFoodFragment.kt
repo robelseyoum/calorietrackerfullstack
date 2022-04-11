@@ -103,15 +103,20 @@ class EditFoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
         }
     }
 
+//    private fun getImage(): MultipartBody.Part {
+//        context!!.contentResolver.openInputStream(mPhotoUri)
+//        if (this::mPhotoUri.isInitialized) {
+//            if (mPhotoUri.toString().isNotEmpty()) {
+//                Log.d("TAG", "getImage: $mPhotoUri ${mPhotoUri.path}")
+//                return File(mPhotoUri.getFilePath(context!!)).fileToMultiPart("foodImage")
+//            }
+//        }
+//    }
+
     private fun getImage(): MultipartBody.Part {
         context!!.contentResolver.openInputStream(mPhotoUri)
-        if (this::mPhotoUri.isInitialized) {
-            if (mPhotoUri.toString().isNotEmpty()) {
-                Log.d("TAG", "getImage: $mPhotoUri ${mPhotoUri.path}")
-                return File(mPhotoUri.getFilePath(context!!)).fileToMultiPart("foodImage")
-            }
-        }
-        return MultipartBody.Part
+        Log.d("TAG", "getImage: $mPhotoUri ${mPhotoUri.path}")
+        return File(mPhotoUri.getFilePath(context!!)).fileToMultiPart("foodImage")
     }
 
     private fun updateFood() {
