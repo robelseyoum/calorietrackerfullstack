@@ -39,8 +39,9 @@ class FoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
     DatePickerDialog.OnDateSetListener {
 
     private lateinit var binding: FragmentFoodBinding
-    private lateinit var mImageUri: Uri
+    private var mImageUri: Uri? = null
     private lateinit var userID: String
+    private lateinit var image: MultipartBody.Part
     private val viewModel: FoodViewModel by viewModels()
     private lateinit var startForSelectImageResult: ActivityResultLauncher<Intent>
 
@@ -101,9 +102,13 @@ class FoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
     }
 
     private fun getImage(): MultipartBody.Part {
-        context!!.contentResolver.openInputStream(mImageUri)
-        Log.d("TAG", "getImage: $mImageUri ${mImageUri.path}")
-        return File(mImageUri.getFilePath(context!!)).fileToMultiPart("foodImage")
+        mImageUri?.let {
+            context!!.contentResolver.openInputStream(it)
+            Log.d("TAG", "getImage: $mImageUri ${it.path}")
+            image =
+                File(it.getFilePath(context!!)).fileToMultiPart("foodImage")
+        }
+        return image
     }
 
     private fun attachAddFoodData() {

@@ -29,9 +29,12 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
+import java.io.IOException
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -42,6 +45,7 @@ class EditFoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
     private lateinit var foodItem: Food
     private lateinit var binding: FragmentEditFoodBinding
     private lateinit var mPhotoUri: Uri
+    private lateinit var image: MultipartBody.Part
     private lateinit var startForSelectImageResult: ActivityResultLauncher<Intent>
     private val viewModel: FoodViewModel by viewModels()
 
@@ -103,16 +107,6 @@ class EditFoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
         }
     }
 
-//    private fun getImage(): MultipartBody.Part {
-//        context!!.contentResolver.openInputStream(mPhotoUri)
-//        if (this::mPhotoUri.isInitialized) {
-//            if (mPhotoUri.toString().isNotEmpty()) {
-//                Log.d("TAG", "getImage: $mPhotoUri ${mPhotoUri.path}")
-//                return File(mPhotoUri.getFilePath(context!!)).fileToMultiPart("foodImage")
-//            }
-//        }
-//    }
-
     private fun getImage(): MultipartBody.Part {
         context!!.contentResolver.openInputStream(mPhotoUri)
         Log.d("TAG", "getImage: $mPhotoUri ${mPhotoUri.path}")
@@ -121,11 +115,20 @@ class EditFoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
 
     private fun updateFood() {
         binding.submitBtn.setOnClickListener {
-            viewModel.editFood(
-                foodItem.userId,
-                getFoodUI(),
-                getImage()
-            )
+
+            if (this::mPhotoUri.isInitialized && !getFoodData().equals(null)) {
+                viewModel.editFood(
+                    foodItem.userId,
+                    getFoodUI(),
+                    getImage()
+                )
+            } else {
+                Toast.makeText(
+                    context,
+                    "Photo loader is not is not Initialized ",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
     }
 
