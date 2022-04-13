@@ -39,7 +39,7 @@ class FoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
     DatePickerDialog.OnDateSetListener {
 
     private lateinit var binding: FragmentFoodBinding
-    private var mImageUri: Uri? = null
+    private lateinit var mImageUri: Uri
     private lateinit var userID: String
     private lateinit var image: MultipartBody.Part
     private val viewModel: FoodViewModel by viewModels()
@@ -75,10 +75,15 @@ class FoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
 
     private fun setUpAddFood() {
         binding.submitBtn.setOnClickListener {
-            viewModel.addFood(
-                getFoodUI(),
-                getImage()
-            )
+
+            if (this::mImageUri.isInitialized && !getImage().equals(null)) {
+                viewModel.addFood(
+                    getFoodUI(),
+                    getImage()
+                )
+            } else {
+
+            }
         }
     }
 

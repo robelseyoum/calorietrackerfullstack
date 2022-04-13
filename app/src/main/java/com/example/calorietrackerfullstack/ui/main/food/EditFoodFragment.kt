@@ -117,12 +117,17 @@ class EditFoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
         binding.submitBtn.setOnClickListener {
 
             if (this::mPhotoUri.isInitialized && !getFoodData().equals(null)) {
+                if (foodItem.foodImage.isNotEmpty()) {
+                    binding.imgGallery.load(
+                        "${Constants.IMAGE_BASE_URL}${foodItem.foodImage}"
+                    ) { placeholder(R.drawable.baseline_photo_24) }
+                }
+            } else {
                 viewModel.editFood(
                     foodItem.userId,
                     getFoodUI(),
                     getImage()
                 )
-            } else {
                 Toast.makeText(
                     context,
                     "Photo loader is not is not Initialized ",
