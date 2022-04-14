@@ -1,6 +1,7 @@
 package com.example.calorietrackerfullstack.ui.main.food
 
 import android.Manifest.*
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -15,6 +16,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -29,14 +31,12 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
 import dagger.hilt.android.AndroidEntryPoint
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import java.io.IOException
+import java.io.InputStream
 import java.util.*
-import kotlin.collections.HashMap
 
 @AndroidEntryPoint
 class EditFoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
@@ -44,8 +44,9 @@ class EditFoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
 
     private lateinit var foodItem: Food
     private lateinit var binding: FragmentEditFoodBinding
+//    private var mPhotoUri: Uri = Uri.parse("")
     private lateinit var mPhotoUri: Uri
-    private lateinit var image: MultipartBody.Part
+    private lateinit var fileImage: MultipartBody.Part
     private lateinit var startForSelectImageResult: ActivityResultLauncher<Intent>
     private val viewModel: FoodViewModel by viewModels()
 
@@ -107,33 +108,27 @@ class EditFoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
         }
     }
 
+    private fun getResources(s: String): InputStream? {
+        return null
+    }
+
     private fun getImage(): MultipartBody.Part {
-        context!!.contentResolver.openInputStream(mPhotoUri)
-        Log.d("TAG", "getImage: $mPhotoUri ${mPhotoUri.path}")
+        try {
+            context!!.contentResolver.openInputStream(mPhotoUri)
+            Log.d("TAG", "getImage: $mPhotoUri ${mPhotoUri.path}")
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
         return File(mPhotoUri.getFilePath(context!!)).fileToMultiPart("foodImage")
     }
 
     private fun updateFood() {
         binding.submitBtn.setOnClickListener {
-
-            if (this::mPhotoUri.isInitialized && !getFoodData().equals(null)) {
-                if (foodItem.foodImage.isNotEmpty()) {
-                    binding.imgGallery.load(
-                        "${Constants.IMAGE_BASE_URL}${foodItem.foodImage}"
-                    ) { placeholder(R.drawable.baseline_photo_24) }
-                }
-            } else {
-                viewModel.editFood(
-                    foodItem.userId,
-                    getFoodUI(),
-                    getImage()
-                )
-                Toast.makeText(
-                    context,
-                    "Photo loader is not is not Initialized ",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+            viewModel.editFood(
+                foodItem.foodId.toString(),
+                getFoodUI(),
+                getImage()
+            )
         }
     }
 
@@ -165,7 +160,7 @@ class EditFoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
                     }
                     is DataResult.Success -> {
                         if (result.value.success) {
-                            navBackAdminReportList()
+                            toAdminReport()
                         }
                     }
                 }
@@ -176,6 +171,7 @@ class EditFoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
     private fun setUpAddImage() {
         binding.fabAddGalleryPhoto.setOnClickListener {
             requestPermission()
+//            pickImage()
         }
     }
 
@@ -255,6 +251,16 @@ class EditFoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
             }
     }
 
+    private fun getImageTwo(): MultipartBody.Part {
+        try {
+            context!!.contentResolver.openInputStream(mPhotoUri)
+            Log.d("TAG", "getImage: $mPhotoUri ${mPhotoUri.path}")
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        return File(mPhotoUri.getFilePath(context!!)).fileToMultiPart("foodImage")
+    }
+
     private fun initLauncher() {
         startForSelectImageResult =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
@@ -325,6 +331,11 @@ class EditFoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
         viewModel.loading.observe(viewLifecycleOwner, Observer { show ->
             binding.progressBar.show(show)
         })
+    }
+
+    private fun toAdminReport() {
+        findNavController()
+            .navigate(R.id.action_editFoodFragment_to_adminFoodReportListFragments)
     }
 
     private fun navBackAdminReportList() {
