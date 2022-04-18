@@ -36,7 +36,7 @@ interface ApiClient {
     @POST("food/add_food")
     suspend fun addFood(
         @PartMap foodData: HashMap<String, RequestBody>,
-        @Part image: MultipartBody.Part
+        @Part image: MultipartBody.Part?
     ): FoodResponse
 
     @DELETE("food/food_delete/{id}")

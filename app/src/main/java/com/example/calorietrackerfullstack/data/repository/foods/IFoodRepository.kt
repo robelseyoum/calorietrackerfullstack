@@ -20,7 +20,7 @@ interface IFoodRepository {
 
     suspend fun addFood(
         foodData: HashMap<String, RequestBody>,
-        image: MultipartBody.Part
+        image: MultipartBody.Part?
     ): DataResult<FoodResponse?>
 
     suspend fun deleteFood(id: String): DataResult<FoodResponse?>

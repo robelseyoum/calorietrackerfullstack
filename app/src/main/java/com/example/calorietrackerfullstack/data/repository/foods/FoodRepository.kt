@@ -29,7 +29,7 @@ class FoodRepository(
 
     override suspend fun addFood(
         foodData: HashMap<String, RequestBody>,
-        image: MultipartBody.Part
+        image: MultipartBody.Part?
     ): DataResult<FoodResponse?> =
         safeDataResult(appDispatchers.io) { apiClient.addFood(foodData, image) }
 

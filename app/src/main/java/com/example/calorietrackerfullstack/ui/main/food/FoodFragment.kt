@@ -135,7 +135,6 @@ class FoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
             map["calorie"] = calories.stringToRequestBody()
             map["date"] = date.stringToRequestBody()
             map["time"] = time.stringToRequestBody()
-            map["time"] = time.stringToRequestBody()
             map["userId"] = userID.stringToRequestBody()
         }
         return map
