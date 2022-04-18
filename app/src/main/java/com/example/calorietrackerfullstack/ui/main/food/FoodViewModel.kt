@@ -53,7 +53,7 @@ class FoodViewModel @Inject constructor(
     fun editFood(
         id: String,
         foodData: HashMap<String, RequestBody>,
-        image: MultipartBody.Part
+        image: MultipartBody.Part?
     ) = viewModelScope.launch {
         loading.value = true
         val result = withContext(appDispatchers.io) { repository.editFood(id, foodData, image) }

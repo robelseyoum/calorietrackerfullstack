@@ -1,7 +1,9 @@
 package com.example.calorietrackerfullstack.ui.main.food
 
-import android.app.Activity
+
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -12,6 +14,8 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -21,6 +25,7 @@ import com.example.calorietrackerfullstack.databinding.FragmentFoodBinding
 import com.example.calorietrackerfullstack.ui.main.foodlist.USER_ID
 import com.example.calorietrackerfullstack.utils.*
 import com.github.dhaval2404.imagepicker.ImagePicker
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,21 +35,17 @@ import java.io.File
 import java.util.*
 import kotlin.collections.HashMap
 
+/***
 @AndroidEntryPoint
-class FoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
+class FoodFragmentTwo : Fragment(), TimePickerDialog.OnTimeSetListener,
     DatePickerDialog.OnDateSetListener {
 
     private lateinit var binding: FragmentFoodBinding
-    private lateinit var mPhotoUri: Uri
+    private lateinit var mImageUri: Uri
     private lateinit var userID: String
     private lateinit var file: File
     private val viewModel: FoodViewModel by viewModels()
-    private var map = HashMap<String, RequestBody>()
     private lateinit var startForSelectImageResult: ActivityResultLauncher<Intent>
-    var food = ""
-    var calories = ""
-    var date = ""
-    var time = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,34 +58,40 @@ class FoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 //        setFoodData()
-        setUploadedPhotoGallery()
+//        setUploadedPhotoGallery()
 //        attachUploadImageData()
 //        attachSubmitFoodData()
-//        initLauncher()
         setBackReportList()
         setUpDateAndTime()
         setUpAddFood()
-//        setUpAddImage()
+        setUpAddImage()
         attachAddFoodData()
         getUserID()
         attachProgressBar()
     }
 
-    private fun setUploadedPhotoGallery() {
-        binding.fabAddGalleryPhoto.setOnClickListener {
-            ImagePicker.with(this)
-                .crop()
-                .compress(COMPRESS_MAX_SIZE)  //Final image size will be less than 1 MB(Optional)
-                .maxResultSize(
-                    MAX_RESULT_SIZE,
-                    MAX_RESULT_SIZE
-                )  //Final image resolution will be less than 1080 x 1080(Optional)
-                .createIntent { intent ->
-                    startForProfileImageResult.launch(intent)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        startForSelectImageResult =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+                val resultCode = result.resultCode
+                val data = result.data
+                when (resultCode) {
+                    AppCompatActivity.RESULT_OK -> {
+                        val fileUri = data?.data!!
+                        mImageUri = fileUri
+                        binding.imgGallery.setImageURI(fileUri)
+                    }
+                    ImagePicker.RESULT_ERROR -> {
+                        Toast.makeText(context, ImagePicker.getError(data), Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                    else -> {
+                        Toast.makeText(context, "Task Cancelled", Toast.LENGTH_SHORT).show()
+                    }
                 }
-        }
+            }
     }
-
 
     private fun getUserID() {
         arguments?.let { arg -> userID = (arg[USER_ID] as String) }
@@ -92,67 +99,36 @@ class FoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
 
     private fun setUpAddFood() {
         binding.submitBtn.setOnClickListener {
-
-            if (this::mPhotoUri.isInitialized) {
-                if (mPhotoUri.toString().isNotEmpty() && checkFormIsNotEmpty()) {
-                    viewModel.addFood(
-                        getFoodUI(),
-                        getImage(mPhotoUri)
-                    )
-                }
-            } else {
-                prepareImage("Image is not added")
-            }
-        }
-    }
-
-    private fun checkFormIsNotEmpty(): Boolean {
-        binding.apply {
-            food = etFoodName.text.toString()
-            calories = etCaloriesValue.text.toString()
-            date = etDate.text.toString()
-            time = etTime.text.toString()
-
-            return if (
-                food.isNotEmpty() &&
-                calories.isNotEmpty() &&
-                date.isNotEmpty() &&
-                time.isNotEmpty()
-            ) {
-                true
-            } else {
-                Toast.makeText(context, "Please fill food form", Toast.LENGTH_SHORT).show()
-                false
-            }
+            viewModel.addFood(
+                getFoodUI(),
+                getImage(mImageUri)
+            )
         }
     }
 
     private fun getFoodUI(): HashMap<String, RequestBody> {
-        if (
-            checkFormIsNotEmpty()
-        ) {
+        binding.apply {
+            val food = etFoodName.text.toString()
+            val calories = etCaloriesValue.text.toString()
+            val date = etDate.text.toString()
+            val time = etTime.text.toString()
+
+            val map = HashMap<String, RequestBody>()
             map["foodName"] = food.stringToRequestBody()
             map["calorie"] = calories.stringToRequestBody()
             map["date"] = date.stringToRequestBody()
             map["time"] = time.stringToRequestBody()
             map["time"] = time.stringToRequestBody()
             map["userId"] = userID.stringToRequestBody()
+
+            return map
         }
-        return map
     }
 
     private fun getImage(mImageUri: Uri): MultipartBody.Part {
-        context!!.contentResolver.openInputStream(mImageUri)
-        Log.d("TAG", "getImage: ${mImageUri} ${mImageUri.path}")
-        return File(mImageUri.getFilePath(context!!)).fileToMultiPart("foodImage")
-    }
-
-    private fun prepareImage(mImageUri: String) {
-        Toast.makeText(
-            context,
-            "Please add Image: $mImageUri",
-            Toast.LENGTH_SHORT
-        ).show()
+        context!!.contentResolver.openInputStream(this.mImageUri)
+        Log.d("TAG", "getImage: ${this.mImageUri} ${this.mImageUri.path}")
+        return File(this.mImageUri.getFilePath(context!!)).fileToMultiPart("foodImage")
     }
 
     private fun attachAddFoodData() {
@@ -194,12 +170,91 @@ class FoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
         })
     }
 
+    private fun setUpAddImage() {
+        binding.fabAddGalleryPhoto.setOnClickListener {
+            requestPermission()
+        }
+    }
+
+    private fun requestPermission() {
+        when {
+            ContextCompat.checkSelfPermission(context!!, Manifest.permission.READ_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED -> {
+                pickImage()
+            }
+            shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE) -> {
+                permissionExplanation()
+            }
+            else -> {
+                askStoragePermission()
+            }
+        }
+    }
+
+    private fun permissionExplanation() {
+        MaterialAlertDialogBuilder(context!!)
+            .setTitle("Permission needed")
+            .setMessage(
+                "This permission is needed to allow us help you use your images in our app."
+            )
+            .setPositiveButton("OK") { _, _ ->
+                askStoragePermission()
+            }
+            .setNegativeButton("No thanks") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+            .show()
+    }
+
+    private fun askStoragePermission() {
+        permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+    }
+
     /******************************
      * ****************************
      * *******Permission Stuff *****
      * ****************************
      * ****************************
      * */
+
+    private var permissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) {
+                pickImage()
+            } else {
+                unAvailableFeature()
+            }
+        }
+
+    private fun unAvailableFeature() {
+        MaterialAlertDialogBuilder(context!!)
+            .setTitle("Unavailable Feature")
+            .setMessage(
+                "Uploading image to the Application isn't available. " +
+                        "Pleas, grant us the permission so you can upload images!!"
+            )
+            .setPositiveButton("Ok") { _, _ ->
+                askStoragePermission()
+            }
+            .setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+            .show()
+    }
+
+    private fun pickImage() {
+        ImagePicker.with(this)
+            .compress(1024)
+            .maxResultSize(1080, 1080)
+            .createIntent { intent ->
+                startForSelectImageResult.launch(intent)
+            }
+    }
+
+
+//    private fun initLauncher() {}
 
     private fun setBackReportList() {
         binding.apply {
@@ -208,22 +263,6 @@ class FoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
             }
         }
     }
-
-    private val startForProfileImageResult =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-            val resultCode = result.resultCode
-            val data = result.data
-
-            if (resultCode == Activity.RESULT_OK) {
-                //Image Uri will not be null for RESULT_OK
-                mPhotoUri = data?.data!!
-                binding!!.imgGallery.setImageURI(mPhotoUri)
-            } else if (resultCode == ImagePicker.RESULT_ERROR) {
-                Toast.makeText(context, ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(context, "Task Cancelled", Toast.LENGTH_SHORT).show()
-            }
-        }
 
     private fun navToFoodList() {
         findNavController().navigate(R.id.action_foodFragment_to_foodListFragment)
@@ -273,5 +312,5 @@ class FoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
 const val SLASH = "/"
 const val TIME_PICKER_DIALOG = "TimepickerDialog"
 const val DATE_PICKER_DIALOG = "Datepickerdialog"
-const val COMPRESS_MAX_SIZE = 1024
-const val MAX_RESULT_SIZE = 1080
+
+*/

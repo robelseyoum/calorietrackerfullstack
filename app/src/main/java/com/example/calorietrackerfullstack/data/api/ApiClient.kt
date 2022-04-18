@@ -26,10 +26,10 @@ interface ApiClient {
 
     @Multipart
     @PUT( "/food/food_update/{id}")
-    fun editFood(
+    suspend fun editFood(
         @Path("id") id: String,
         @PartMap foodData: HashMap<String, RequestBody>,
-        @Part image: MultipartBody.Part
+        @Part image: MultipartBody.Part?
     ): FoodResponse
 
     @Multipart

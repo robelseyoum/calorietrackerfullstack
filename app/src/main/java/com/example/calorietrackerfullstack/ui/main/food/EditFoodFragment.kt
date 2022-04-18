@@ -1,8 +1,7 @@
 package com.example.calorietrackerfullstack.ui.main.food
 
-import android.Manifest.*
+import android.app.Activity
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -13,24 +12,25 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import coil.load
 import com.example.calorietrackerfullstack.R
 import com.example.calorietrackerfullstack.data.model.Food
 import com.example.calorietrackerfullstack.databinding.FragmentEditFoodBinding
 import com.example.calorietrackerfullstack.utils.*
 import com.github.dhaval2404.imagepicker.ImagePicker
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.squareup.picasso.Picasso
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import java.util.*
 import kotlin.collections.HashMap
@@ -42,8 +42,16 @@ class EditFoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
     private lateinit var foodItem: Food
     private lateinit var binding: FragmentEditFoodBinding
     private lateinit var mPhotoUri: Uri
-    private lateinit var startForSelectImageResult: ActivityResultLauncher<Intent>
     private val viewModel: FoodViewModel by viewModels()
+    private var map = HashMap<String, RequestBody>()
+    private lateinit var startForSelectImageResult: ActivityResultLauncher<Intent>
+    var multipartBody: MultipartBody.Part? = null
+    private lateinit var file: File
+    var food = ""
+    var calories = ""
+    var date = ""
+    var time = ""
+    var foodImage = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,14 +64,13 @@ class EditFoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navBackAdminReportList()
-        initLauncher()
         getFoodData()
         setFoodData()
-        updateFood()
+        setUpAddFood()
         attachUpdateFoodData()
         attachProgressBar()
-        setUpAddImage()
         setUpDateAndTime()
+        addImageToGallery()
     }
 
     private fun getFoodData() {
@@ -78,9 +85,88 @@ class EditFoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
             etCaloriesValue.setText(foodItem.calorieValue)
 
             if (foodItem.foodImage.isNotEmpty()) {
-                binding.imgGallery.load(
+                Picasso.get().load(
                     "${Constants.IMAGE_BASE_URL}${foodItem.foodImage}"
-                ) { placeholder(R.drawable.baseline_photo_24) }
+                ).into(binding.imgGallery)
+            }
+        }
+    }
+
+    private fun setUpAddFood() {
+        binding.submitBtn.setOnClickListener {
+            if (checkFormIsNotEmpty()) {
+                viewModel.editFood(
+                    foodItem.foodId.toString(),
+                    getFoodUI(),
+                    getImage()
+                )
+            } else {
+                noImageMessage("Image is not added")
+            }
+        }
+    }
+
+    private fun setUploadedPhotoGallery() {
+        ImagePicker.with(this)
+            .crop()
+            .compress(COMPRESS_MAX_SIZE)  //Final image size will be less than 1 MB(Optional)
+            .maxResultSize(
+                MAX_RESULT_SIZE,
+                MAX_RESULT_SIZE
+            )  //Final image resolution will be less than 1080 x 1080(Optional)
+            .createIntent { intent ->
+                startForProfileImageResult.launch(intent)
+            }
+    }
+
+    private fun addImageToGallery() {
+        binding.fabAddGalleryPhoto.setOnClickListener {
+            setUploadedPhotoGallery()
+        }
+    }
+
+    private fun getImage(): MultipartBody.Part? {
+        if (this::mPhotoUri.isInitialized) {
+            if (mPhotoUri.path!!.isNotEmpty()) {
+                context!!.contentResolver.openInputStream(mPhotoUri)
+                multipartBody = File(mPhotoUri.getFilePath(context!!)).fileToMultiPart("foodImage")
+                Log.d("TAG", "getImage: ${mPhotoUri} ${mPhotoUri.path}")
+            }
+        } else {
+            Picasso.get().load(
+                "${Constants.IMAGE_BASE_URL}${foodItem.foodImage}"
+            ).into(binding.imgGallery)
+        }
+        return multipartBody
+    }
+
+    private fun noImageMessage(mImageUri: String) {
+        Toast.makeText(
+            context,
+            "Please add Image: $mImageUri",
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+
+    private fun checkFormIsNotEmpty(): Boolean {
+        binding.apply {
+            food = etFoodName.text.toString()
+            calories = etCaloriesValue.text.toString()
+            date = etDate.text.toString()
+            time = etTime.text.toString()
+            foodImage = foodItem.foodImage
+
+            return if (
+                food.isNotEmpty() &&
+                calories.isNotEmpty() &&
+                date.isNotEmpty() &&
+                time.isNotEmpty() &&
+                foodImage.isNotEmpty()
+            ) {
+                true
+            } else {
+                Toast.makeText(context, "Please fill food form", Toast.LENGTH_SHORT).show()
+                false
             }
         }
     }
@@ -100,32 +186,6 @@ class EditFoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
             map["userId"] = foodItem.userId.stringToRequestBody()
 
             return map
-        }
-    }
-
-//    private fun getImage(): MultipartBody.Part {
-//        context!!.contentResolver.openInputStream(mPhotoUri)
-//        if (this::mPhotoUri.isInitialized) {
-//            if (mPhotoUri.toString().isNotEmpty()) {
-//                Log.d("TAG", "getImage: $mPhotoUri ${mPhotoUri.path}")
-//                return File(mPhotoUri.getFilePath(context!!)).fileToMultiPart("foodImage")
-//            }
-//        }
-//    }
-
-    private fun getImage(): MultipartBody.Part {
-        context!!.contentResolver.openInputStream(mPhotoUri)
-        Log.d("TAG", "getImage: $mPhotoUri ${mPhotoUri.path}")
-        return File(mPhotoUri.getFilePath(context!!)).fileToMultiPart("foodImage")
-    }
-
-    private fun updateFood() {
-        binding.submitBtn.setOnClickListener {
-            viewModel.editFood(
-                foodItem.userId,
-                getFoodUI(),
-                getImage()
-            )
         }
     }
 
@@ -157,7 +217,7 @@ class EditFoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
                     }
                     is DataResult.Success -> {
                         if (result.value.success) {
-                            navBackAdminReportList()
+                            navToAdminAddFoodList()
                         }
                     }
                 }
@@ -165,11 +225,6 @@ class EditFoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
         })
     }
 
-    private fun setUpAddImage() {
-        binding.fabAddGalleryPhoto.setOnClickListener {
-            requestPermission()
-        }
-    }
 
     /******************************
      * ****************************
@@ -177,97 +232,20 @@ class EditFoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
      * ****************************
      * ****************************
      * */
-    private var permissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-            if (isGranted) {
-                pickImage()
+    private val startForProfileImageResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            val resultCode = result.resultCode
+            val data = result.data
+            if (resultCode == Activity.RESULT_OK) {
+                //Image Uri will not be null for RESULT_OK
+                mPhotoUri = data?.data!!
+                binding!!.imgGallery.setImageURI(mPhotoUri)
+            } else if (resultCode == ImagePicker.RESULT_ERROR) {
+                Toast.makeText(activity, ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
             } else {
-                unAvailableFeature()
+                Toast.makeText(activity, "Task Cancelled", Toast.LENGTH_SHORT).show()
             }
         }
-
-    private fun unAvailableFeature() {
-        MaterialAlertDialogBuilder(context!!)
-            .setTitle("Unavailable Feature")
-            .setMessage(
-                "Uploading image to the Application isn't available. " +
-                        "Pleas, grant us the permission so you can upload images!!"
-            )
-            .setPositiveButton("Ok") { _, _ ->
-                askStoragePermission()
-            }
-            .setNegativeButton("Cancel") { dialog, _ ->
-                dialog.dismiss()
-            }
-            .create()
-            .show()
-    }
-
-    private fun requestPermission() {
-        when {
-            ContextCompat.checkSelfPermission(context!!, permission.READ_EXTERNAL_STORAGE)
-                    == PackageManager.PERMISSION_GRANTED -> {
-                pickImage()
-            }
-            shouldShowRequestPermissionRationale(permission.READ_EXTERNAL_STORAGE) -> {
-                permissionExplanation()
-            }
-            else -> {
-                askStoragePermission()
-            }
-        }
-    }
-
-    private fun permissionExplanation() {
-        MaterialAlertDialogBuilder(context!!)
-            .setTitle("Permission needed")
-            .setMessage(
-                "This permissioin is needed to allow us help you use your image in our app."
-            )
-            .setPositiveButton("Ok") { _, _ ->
-                askStoragePermission()
-            }
-            .setNegativeButton("Noo thanks") { dialog, _ ->
-                dialog.dismiss()
-            }
-            .create()
-            .show()
-    }
-
-    private fun askStoragePermission() {
-        permissionLauncher.launch(permission.READ_EXTERNAL_STORAGE)
-    }
-
-    private fun pickImage() {
-        ImagePicker.with(this)
-            .compress(1024)
-            .maxResultSize(1080, 1080)
-            .createIntent { intent ->
-                startForSelectImageResult.launch(intent)
-            }
-    }
-
-    private fun initLauncher() {
-        startForSelectImageResult =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-                val resultCode = result.resultCode
-                val data = result.data
-                when (resultCode) {
-                    AppCompatActivity.RESULT_OK -> {
-                        val fileUri = data?.data!!
-                        mPhotoUri = fileUri
-                        binding.imgGallery.setImageURI(fileUri)
-                    }
-                    ImagePicker.RESULT_ERROR -> {
-                        Toast.makeText(context, ImagePicker.getError(data), Toast.LENGTH_SHORT)
-                            .show()
-                    }
-                    else -> {
-                        Toast.makeText(context, "Task Cancelled", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
-    }
 
     private fun setUpDateAndTime() {
         binding.apply {
@@ -321,9 +299,13 @@ class EditFoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
 
     private fun navBackAdminReportList() {
         binding.textBack.setOnClickListener {
-            findNavController()
-                .navigate(R.id.action_editFoodFragment_to_adminFoodReportListFragments)
+            navToAdminAddFoodList()
         }
+    }
+
+    private fun navToAdminAddFoodList() {
+        findNavController()
+            .navigate(R.id.action_editFoodFragment_to_adminFoodReportListFragments)
     }
 }
 
