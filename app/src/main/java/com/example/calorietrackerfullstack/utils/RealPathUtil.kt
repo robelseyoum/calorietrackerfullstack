@@ -13,7 +13,7 @@ import android.text.TextUtils
 object RealPathUtil {
 
     fun getRealPath(context: Context, fileUri: Uri): String? {
-        return getRealPathFromURIAPI19(context, fileUri)
+        return getRealPathFromURIAPI11to18(context, fileUri)
     }
 
     @SuppressLint("NewApi")
