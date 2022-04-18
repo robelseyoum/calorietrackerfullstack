@@ -20,7 +20,7 @@ class FoodRepository(
     override suspend fun editFood(
         foodId: String,
         foodData: HashMap<String, RequestBody>,
-        image: MultipartBody.Part
+        image: MultipartBody.Part?
     ): DataResult<FoodResponse?> =
         safeDataResult(appDispatchers.io) { apiClient.editFood(foodId, foodData, image) }
 

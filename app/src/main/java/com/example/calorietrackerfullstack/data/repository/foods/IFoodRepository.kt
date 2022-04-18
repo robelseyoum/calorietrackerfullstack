@@ -13,7 +13,7 @@ interface IFoodRepository {
     suspend fun editFood(
         foodId: String,
         foodData: HashMap<String, RequestBody>,
-        image: MultipartBody.Part
+        image: MultipartBody.Part?
     ): DataResult<FoodResponse?>
 
     suspend fun getFoods(userId: String): DataResult<FoodsResponse?>
