@@ -44,6 +44,7 @@ class FoodViewModelTest {
             "userId" to "1".stringToRequestBody(),
         )
 
+    // Context of the app under test.
     private val multipartBody: MultipartBody.Part? = null // can be null since just a test
 
 
