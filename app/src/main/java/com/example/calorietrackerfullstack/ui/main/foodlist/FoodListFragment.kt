@@ -1,5 +1,6 @@
 package com.example.calorietrackerfullstack.ui.main.foodlist
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -19,7 +20,13 @@ import com.example.calorietrackerfullstack.ui.main.adapter.FoodsListAdapter
 import com.example.calorietrackerfullstack.utils.DataResult
 import com.example.calorietrackerfullstack.utils.Prefs
 import com.example.calorietrackerfullstack.utils.show
+import com.github.mikephil.charting.animation.Easing
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
+import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.formatter.PercentFormatter
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.ArrayList
 
 @AndroidEntryPoint
 class FoodListFragment : Fragment() {
@@ -128,6 +135,28 @@ class FoodListFragment : Fragment() {
         binding.recycler.adapter = adapter
     }
 
+    private fun loadPieChartData(total: Double){
+        val minThresholdLimit = maxCaloriesLimit - total
+        val entries: ArrayList<PieEntry> = ArrayList()
+        entries.add(PieEntry(total.toFloat(), EATEN))
+        entries.add(PieEntry(minThresholdLimit.toFloat(), BUDGET_CALORIES))
+
+        val colors: ArrayList<Int> = ArrayList()
+        colors.add(Color.RED)
+        colors.add(Color.GREEN)
+
+        val dataSet = PieDataSet(entries, "")
+        dataSet.colors = colors
+        val data = PieData(dataSet)
+        data.setDrawValues(true)
+        data.setValueFormatter(PercentFormatter(binding.pieChart))
+        data.setValueTextSize(12f)
+        data.setValueTextColor(Color.TRANSPARENT)
+        binding.pieChart.setData(data)
+        binding.pieChart.invalidate()
+        binding.pieChart.animateY(1400, Easing.EaseInOutQuad)
+    }
+
     private fun setOpenAdminFeatures() {
         binding.apply { textAdmin.setOnClickListener { navReportList() } }
     }
@@ -158,3 +187,5 @@ class FoodListFragment : Fragment() {
 
 
 const val USER_ID = "USER_ID"
+const val EATEN = "Eaten"
+const val BUDGET_CALORIES = "Budget Calories"
