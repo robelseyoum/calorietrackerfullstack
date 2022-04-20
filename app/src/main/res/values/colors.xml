@@ -28,6 +28,8 @@
     <color name="grey_800">#424242</color>
     <color name="grey_900">#212121</color>
     <color name="orange">#FFA500</color>
+    <color name="red_color">#FF0000</color>
+    <color name="green_color">#00FF00</color>
 
     <color name="colorPrimary">#FF6200EE</color>
     <color name="white_background">#fff</color>

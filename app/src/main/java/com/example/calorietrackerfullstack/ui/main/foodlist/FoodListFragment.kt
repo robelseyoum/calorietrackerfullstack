@@ -56,8 +56,8 @@ class FoodListFragment : Fragment() {
         setAddFood()
 //        setHistoryFeature()
 //        getFoodListData(DateUtils.currentDate())
-//        setupPieChart()
-//        maxCalories()
+        setupPieChart()
+        maxCalories()
 //        calculateDailyLimit(DateUtils.currentDate())
         attachListOfData()
         getFoodList()
@@ -107,6 +107,7 @@ class FoodListFragment : Fragment() {
                         if (foods.value.success) {
                             foods.value.data?.let { data ->
                                 setupAdaptor(data)
+                                calculateCalories(data)
                             }
                         } else {
                             binding.textError.visibility = View.VISIBLE
@@ -116,6 +117,17 @@ class FoodListFragment : Fragment() {
                 }
             }
         })
+    }
+
+    private fun calculateCalories(data: List<Food>) {
+        var total = 0.0
+        data.forEach { total += it.calorieValue.toDouble() }
+        binding.tvEatenCalories.text = total.toString()
+        if (total == maxCaloriesLimit.toDouble()) {
+            binding.textMaxCalorieLeft.show(true)
+            binding.textMaxCalorieRight.show(true)
+        }
+        loadPieChartData(total)
     }
 
     private fun attachProgressBar() {
@@ -135,7 +147,25 @@ class FoodListFragment : Fragment() {
         binding.recycler.adapter = adapter
     }
 
-    private fun loadPieChartData(total: Double){
+    private fun setupPieChart() {
+        binding.apply {
+            pieChart.apply {
+                isDrawHoleEnabled = true
+                setUsePercentValues(false)
+                setEntryLabelTextSize(10F)
+                setEntryLabelColor(Color.TRANSPARENT)
+                centerText = maxCaloriesLimit.toString()
+                setCenterTextSize(18F)
+                description.isEnabled = false
+            }
+        }
+    }
+
+    private fun maxCalories() {
+        binding.tvMaxCalories.text = maxCaloriesLimit.toString()
+    }
+
+    private fun loadPieChartData(total: Double) {
         val minThresholdLimit = maxCaloriesLimit - total
         val entries: ArrayList<PieEntry> = ArrayList()
         entries.add(PieEntry(total.toFloat(), EATEN))

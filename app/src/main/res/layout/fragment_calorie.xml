@@ -18,6 +18,23 @@
         />
 
     <TextView
+        android:id="@+id/text_max_calorie_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/space_8"
+        android:paddingEnd="@dimen/space_8"
+        android:layout_marginTop="@dimen/space_50"
+        android:textColor="@color/red_color"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:text="@string/max_calories"
+        android:textSize="@dimen/padding_fourteen_sp"
+        app:layout_constraintStart_toEndOf="@+id/pieChart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_logout"
+        />
+
+    <TextView
         android:id="@+id/text_admin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -29,6 +46,22 @@
         android:textSize="@dimen/padding_halves_sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_max_calorie_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/max_calories"
+        android:layout_marginTop="@dimen/space_50"
+        android:paddingStart="@dimen/space_8"
+        android:paddingEnd="@dimen/space_8"
+        android:visibility="gone"
+        android:textColor="@color/red_color"
+        tools:visibility="visible"
+        android:textSize="@dimen/padding_fourteen_sp"
+        app:layout_constraintEnd_toStartOf="@+id/pieChart"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_admin"/>
 
     <TextView
         android:id="@+id/text_sample"
@@ -88,7 +121,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_8"
         android:text="@string/text_0"
-        android:textColor="@color/teal_700"
+        android:textColor="@color/red_color"
         android:textSize="@dimen/box_text_size"
         app:layout_constraintEnd_toEndOf="@+id/text_sample"
         app:layout_constraintStart_toStartOf="@+id/text_sample"
@@ -111,7 +144,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/text_0"
-        android:textColor="@color/teal_700"
+        android:textColor="@color/green_color"
         android:textSize="@dimen/box_text_size"
         app:layout_constraintEnd_toEndOf="@+id/textView2"
         app:layout_constraintStart_toStartOf="@+id/textView2"
