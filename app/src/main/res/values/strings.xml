@@ -29,6 +29,7 @@
     <string name="date">Date</string>
     <string name="logout">Logout</string>
     <string name="admin_panel">Admin Panel</string>
+    <string name="max_calories">You have reached \nMax Calories</string>
     <string name="eaten">Eaten</string>
     <string name="no_food_error">No food is found</string>
     <string name="calories_budget">Calories Budget</string>
