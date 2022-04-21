@@ -25,11 +25,14 @@ import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
+import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.ArrayList
 
 @AndroidEntryPoint
-class FoodListFragment : Fragment() {
+class FoodListFragment : Fragment(),
+    DatePickerDialog.OnDateSetListener {
 
     val maxCaloriesLimit = 2100
     private lateinit var binding: FragmentCalorieBinding
@@ -212,6 +215,10 @@ class FoodListFragment : Fragment() {
 
     private fun navReportList() {
         findNavController().navigate(R.id.action_foodListFragment_to_adminFoodReportListFragments)
+    }
+
+    override fun onDateSet(view: DatePickerDialog?, year: Int, monthOfYear: Int, dayOfMonth: Int) {
+
     }
 }
 
