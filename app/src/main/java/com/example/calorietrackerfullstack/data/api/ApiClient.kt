@@ -21,10 +21,9 @@ interface ApiClient {
     @GET("/food/foods_list")
     suspend fun getAllFoods(): FoodsResponse
 
-    @GET("/food/foods_list/{id}/{date}")
+    @GET("/food/foods_list/{id}")
     suspend fun getFoods(
         @Path("id") id: String,
-        @Path("date") date: String,
     ): FoodsResponse
 
     @Multipart

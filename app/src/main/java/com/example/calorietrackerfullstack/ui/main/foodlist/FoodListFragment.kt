@@ -26,6 +26,7 @@ import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,6 +39,7 @@ class FoodListFragment : Fragment(),
     val maxCaloriesLimit = 2100
     private lateinit var binding: FragmentCalorieBinding
     private val viewModel: FoodListViewModel by viewModels()
+    private lateinit var foodList: List<Food>
     val bundle = Bundle()
     var userId: Int = 0
 
@@ -58,7 +60,7 @@ class FoodListFragment : Fragment(),
         setOpenAdminFeatures()
         setLogout()
         setAddFood()
-//        setHistoryFeature()
+        setHistoryFeature()
 //        getFoodListData(DateUtils.currentDate())
         setupPieChart()
         maxCalories()
@@ -66,6 +68,14 @@ class FoodListFragment : Fragment(),
         attachListOfData()
         getFoodList()
         attachProgressBar()
+    }
+
+    private fun setHistoryFeature() {
+        binding.apply {
+            tvHistory.setOnClickListener {
+                showDataRangePicker()
+            }
+        }
     }
 
     private fun getUserId() {
@@ -82,7 +92,7 @@ class FoodListFragment : Fragment(),
     }
 
     private fun getFoodList() {
-        viewModel.getFoods(userId.toString(), DateUtils.currentDate())
+        viewModel.getFoods(userId.toString())
     }
 
     private fun attachListOfData() {
@@ -110,8 +120,8 @@ class FoodListFragment : Fragment(),
                     is DataResult.Success -> {
                         if (foods.value.success) {
                             foods.value.data?.let { data ->
-                                setupAdaptor(data)
-                                calculateCalories(data)
+                                foodList = data
+                                setupTodayFoodCalories()
                             }
                         } else {
                             binding.textError.visibility = View.VISIBLE
@@ -122,6 +132,41 @@ class FoodListFragment : Fragment(),
             }
         })
     }
+
+    private fun setupTodayFoodCalories() {
+        val foodDateList = foodList.filter {
+            (it.date == DateUtils.currentDate())
+        }
+        setupAdaptor(foodDateList)
+        calculateCalories(foodDateList)
+    }
+
+    private fun showDataRangePicker() {
+        val dateRangePicker =
+            MaterialDatePicker
+                .Builder.dateRangePicker()
+                .setTitleText("Select Date")
+                .build()
+
+        dateRangePicker.show(
+            fragmentManager!!,
+            DATE_RANGE_PICKER
+        )
+
+        dateRangePicker.addOnPositiveButtonClickListener { dateSelected ->
+            val startDate = dateSelected.first
+            val endDate = dateSelected.second
+
+            if (startDate != null && endDate != null) {
+                val foodDateList = foodList.filter {
+                    (it.date >= DateUtils.convertLongToStringTime(startDate)) &&
+                    (it.date <= DateUtils.convertLongToStringTime(endDate))
+                }
+                setupAdaptor(foodDateList)
+            }
+        }
+    }
+
 
     private fun calculateCalories(data: List<Food>) {
         var total = 0.0
@@ -218,12 +263,11 @@ class FoodListFragment : Fragment(),
         findNavController().navigate(R.id.action_foodListFragment_to_adminFoodReportListFragments)
     }
 
-    override fun onDateSet(view: DatePickerDialog?, year: Int, monthOfYear: Int, dayOfMonth: Int) {
-
-    }
+    override fun onDateSet(view: DatePickerDialog?, year: Int, monthOfYear: Int, dayOfMonth: Int) {}
 }
 
 
 const val USER_ID = "USER_ID"
 const val EATEN = "Eaten"
 const val BUDGET_CALORIES = "Budget Calories"
+const val DATE_RANGE_PICKER = "DATE_RANGE_PICKER"
