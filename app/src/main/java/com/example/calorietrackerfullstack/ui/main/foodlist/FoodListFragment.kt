@@ -18,6 +18,7 @@ import com.example.calorietrackerfullstack.databinding.FragmentCalorieBinding
 import com.example.calorietrackerfullstack.prefs
 import com.example.calorietrackerfullstack.ui.main.adapter.FoodsListAdapter
 import com.example.calorietrackerfullstack.utils.DataResult
+import com.example.calorietrackerfullstack.utils.DateUtils
 import com.example.calorietrackerfullstack.utils.Prefs
 import com.example.calorietrackerfullstack.utils.show
 import com.github.mikephil.charting.animation.Easing
@@ -81,7 +82,7 @@ class FoodListFragment : Fragment(),
     }
 
     private fun getFoodList() {
-        viewModel.getFoods(userId.toString())
+        viewModel.getFoods(userId.toString(), DateUtils.currentDate())
     }
 
     private fun attachListOfData() {

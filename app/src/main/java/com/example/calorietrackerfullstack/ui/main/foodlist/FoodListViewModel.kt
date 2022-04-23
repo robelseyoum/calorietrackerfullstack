@@ -25,9 +25,9 @@ class FoodListViewModel @Inject constructor(
     val foodList: LiveData<DataResult<FoodsResponse>?> = _foodList
     val loading = MutableLiveData<Boolean>()
 
-    fun getFoods(userId: String) = viewModelScope.launch {
+    fun getFoods(userId: String, date: String) = viewModelScope.launch {
         loading.value = true
-        val result = withContext(appDispatchers.io) { repository.getFoods(userId) }
+        val result = withContext(appDispatchers.io) { repository.getFoods(userId, date) }
         when (result) {
             is GenericError -> {
                 loading.value = false

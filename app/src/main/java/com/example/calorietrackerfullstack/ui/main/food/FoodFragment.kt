@@ -269,7 +269,7 @@ class FoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
 
 }
 
-const val SLASH = "/"
+const val SLASH = "-"
 const val TIME_PICKER_DIALOG = "TimepickerDialog"
 const val DATE_PICKER_DIALOG = "Datepickerdialog"
 const val COMPRESS_MAX_SIZE = 1024
