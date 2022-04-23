@@ -33,7 +33,7 @@ class DateUtils {
             val day = c[Calendar.DAY_OF_MONTH]
             val month = c[Calendar.MONTH]
             val year = c[Calendar.YEAR]
-            val date = day.toString() + "/" + (month + 1) + "/" + year
+            val date = day.toString() + "-" + (month + 1) + "-" + year
 
             return date.toString()
         }
