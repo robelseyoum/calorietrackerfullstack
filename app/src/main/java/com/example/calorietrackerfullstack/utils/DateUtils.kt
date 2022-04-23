@@ -28,6 +28,15 @@ class DateUtils {
             }
         }
 
+        //from date range
+        fun convertLongToStringTime(time: Long): String {
+            val date = Date(time)
+            val format = SimpleDateFormat(
+                "dd-MM-yyyy",
+                Locale.getDefault())
+            return format.format(date)
+        }
+
         fun currentDate(): String {
             val c = Calendar.getInstance()
             val day = c[Calendar.DAY_OF_MONTH]
