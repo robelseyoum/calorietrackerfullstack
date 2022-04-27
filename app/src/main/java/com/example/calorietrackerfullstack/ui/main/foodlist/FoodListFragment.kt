@@ -28,7 +28,6 @@ import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
-import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.ArrayList
 
@@ -61,10 +60,8 @@ class FoodListFragment : Fragment(),
         setLogout()
         setAddFood()
         setHistoryFeature()
-//        getFoodListData(DateUtils.currentDate())
         setupPieChart()
         maxCalories()
-//        calculateDailyLimit(DateUtils.currentDate())
         attachListOfData()
         getFoodList()
         attachProgressBar()
