@@ -21,8 +21,8 @@ interface ApiClient {
     @GET("/food/foods_list")
     suspend fun getAllFoods(): FoodsResponse
 
-    @GET("/food/foods_list/{id}")
-    suspend fun getFoods(
+    @GET("/food/single_food/{id}")
+    suspend fun getFood(
         @Path("id") id: String,
     ): FoodsResponse
 

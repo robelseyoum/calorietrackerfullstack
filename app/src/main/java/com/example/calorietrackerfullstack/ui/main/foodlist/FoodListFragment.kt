@@ -169,7 +169,7 @@ class FoodListFragment : Fragment(),
         var total = 0.0
         data.forEach { total += it.calorieValue.toDouble() }
         binding.tvEatenCalories.text = total.toString()
-        if (total == maxCaloriesLimit.toDouble()) {
+        if (total >= maxCaloriesLimit.toDouble()) {
             binding.textMaxCalorieLeft.show(true)
             binding.textMaxCalorieRight.show(true)
         }
@@ -265,6 +265,6 @@ class FoodListFragment : Fragment(),
 
 
 const val USER_ID = "USER_ID"
-const val EATEN = "Eaten"
-const val BUDGET_CALORIES = "Budget Calories"
+const val EATEN = "EATEN"
+const val BUDGET_CALORIES = "BUDGET_CALORIES"
 const val DATE_RANGE_PICKER = "DATE_RANGE_PICKER"
