@@ -98,7 +98,7 @@ class FoodListFragment : Fragment(),
                 when (foods) {
                     is DataResult.GenericError -> {
                         Log.d(
-                            "LoginFragment",
+                            "FoodListFragment",
                             "code- ${foods.code} error message- ${foods.errorMessages}"
                         )
                         Toast.makeText(
@@ -108,7 +108,7 @@ class FoodListFragment : Fragment(),
                         ).show()
                     }
                     is DataResult.NetworkError -> {
-                        Log.d("LoginFragment", "network error message- ${foods.networkError}")
+                        Log.d("FoodListFragment", "network error message- ${foods.networkError}")
                         Toast.makeText(
                             context, "Network error message- ${foods.networkError}",
                             Toast.LENGTH_SHORT
