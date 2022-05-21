@@ -9,7 +9,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/space_80">
+            android:layout_height="@dimen/space_100">
 
             <TextView
                 android:id="@+id/tv_product_name"
@@ -62,7 +62,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/space_16"
                 android:layout_marginBottom="@dimen/space_8"
+                android:padding="@dimen/space_10"
                 android:text="@string/date_sample"
+                app:layout_constraintTop_toBottomOf="@+id/tv_product_name"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/img_food" />
 
@@ -72,9 +74,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
+                android:padding="@dimen/space_10"
                 android:text="@string/time_sample"
+                app:layout_constraintTop_toBottomOf="@+id/tv_calories"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintStart_toStartOf="@+id/tv_calories" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
