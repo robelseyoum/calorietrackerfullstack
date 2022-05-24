@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.bumptech.glide.Glide
 import com.example.calorietrackerfullstack.R
 import com.example.calorietrackerfullstack.data.model.Food
 import com.example.calorietrackerfullstack.utils.Constants
@@ -41,9 +42,10 @@ class AdminFoodsListAdapter(private val foodList: List<Food>, private val listen
         holder.itemView.tv_date.text = foodList[position].date
         holder.itemView.tv_time.text = foodList[position].time
         holder.itemView.tv_calories.text = foodList[position].calorieValue
-        holder.itemView.img_food.load(
-            "${Constants.IMAGE_BASE_URL}${foodList[position].foodImage}"
-        ) { placeholder(R.drawable.baseline_photo_24) }
+        Glide.with(holder.itemView.context).
+        load("${Constants.IMAGE_BASE_URL}${foodList[position].foodImage}")
+            .placeholder(R.drawable.baseline_photo_24)
+            .into(holder.itemView.img_food)
         holder.bind(foodList[position], listener)
     }
 

@@ -131,9 +131,7 @@ class FoodListFragment : Fragment(),
     }
 
     private fun setupTodayFoodCalories() {
-        val foodDateList = foodList.filter {
-            (it.date == DateUtils.currentDate())
-        }
+        val foodDateList = foodList.filter { (it.date == DateUtils.currentDate()) }
         setupAdaptor(foodDateList)
         calculateCalories(foodDateList)
     }

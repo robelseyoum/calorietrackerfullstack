@@ -3,14 +3,11 @@ package com.example.calorietrackerfullstack.ui.main.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
+import com.bumptech.glide.Glide
 import com.example.calorietrackerfullstack.R
 import com.example.calorietrackerfullstack.data.model.Food
 import com.example.calorietrackerfullstack.utils.Constants.Companion.IMAGE_BASE_URL
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.food_item_raw.view.*
 
 class FoodsListAdapter(private val foodList: List<Food>, private val listener: OnClickListener) :
@@ -37,9 +34,10 @@ class FoodsListAdapter(private val foodList: List<Food>, private val listener: O
         holder.itemView.tv_date.text = foodList[position].date
         holder.itemView.tv_time.text = foodList[position].time
         holder.itemView.tv_calories.text = foodList[position].calorieValue
-        holder.itemView.img_food.load(
-            "$IMAGE_BASE_URL${foodList[position].foodImage}"
-        ) { placeholder(R.drawable.baseline_photo_24) }
+        Glide.with(holder.itemView.context).
+        load("$IMAGE_BASE_URL${foodList[position].foodImage}")
+            .placeholder(R.drawable.baseline_photo_24)
+            .into(holder.itemView.img_food)
         holder.bind(foodList[position], listener)
     }
 

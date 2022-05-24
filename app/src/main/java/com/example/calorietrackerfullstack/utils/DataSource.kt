@@ -1,5 +1,4 @@
 package com.example.calorietrackerfullstack.utils
-import com.example.calorietrackerfullstack.utils.Constants.Companion.NETWORK_ERROR
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.withContext
