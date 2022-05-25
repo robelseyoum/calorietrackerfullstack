@@ -50,11 +50,6 @@ class RegisterFragment : Fragment() {
     private fun setUpRegister() {
         binding.apply {
             regButton.setOnClickListener {
-                Log.d(
-                    "RegisterFragment",
-                    "Sign up clicked"
-                )
-
                 val imm =
                     context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 
@@ -122,7 +117,7 @@ class RegisterFragment : Fragment() {
                         binding.progressBar.visibility = View.GONE
                         Toast.makeText(
                             context,
-                            "GenericError code- ${result.code} error message- ${result.errorMessages}",
+                            "Username or Password is Wrong",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
@@ -130,7 +125,7 @@ class RegisterFragment : Fragment() {
                         Log.d("RegisterFragment", "network error message- ${result.networkError}")
                         Toast.makeText(
                             context,
-                            "Network error message- ${result.networkError}",
+                            "No Internet - ${result.networkError}",
                             Toast.LENGTH_SHORT
                         ).show()
                     }

@@ -51,13 +51,8 @@ class LoginFragment : Fragment() {
     private fun setUpLogin() {
         binding.apply {
             loginBtn.setOnClickListener {
-
                 val imm =
                     context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-
-                //Toast.makeText(context, "loginBtn", Toast.LENGTH_SHORT).show()
-                var isEmailValid = false
-                lateinit var errorMessage: String
 
                 val userName = userNameEdit.text.toString().trim()
                 val password = passwordEdit.text.toString()
