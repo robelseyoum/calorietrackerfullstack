@@ -29,18 +29,18 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/emailTextInput"
+        android:id="@+id/userNameContainer"
         android:layout_width="@dimen/space_300"
         android:layout_height="@dimen/space_50"
         android:layout_marginTop="@dimen/space_32"
-        android:hint="@string/email"
+        android:hint="@string/username"
         app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4">
 
-        <EditText
-            android:id="@+id/reg_email"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/userNameEdit"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="textEmailAddress" />
@@ -49,18 +49,39 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/passwordInput"
+        android:id="@+id/confirmUserNameContainer"
+        android:layout_width="@dimen/space_300"
+        android:layout_height="@dimen/space_50"
+        android:layout_marginTop="@dimen/space_32"
+        android:hint="@string/confirm_username"
+        app:errorEnabled="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userNameContainer">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/confirmUserNameEdit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textEmailAddress" />
+
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/userPasswordInputContainer"
         android:layout_width="@dimen/space_300"
         android:layout_height="@dimen/space_50"
         android:layout_marginTop="@dimen/space_32"
         android:hint="@string/password"
         app:errorEnabled="true"
+        app:passwordToggleEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailTextInput">
+        app:layout_constraintTop_toBottomOf="@+id/confirmUserNameContainer">
 
-        <EditText
-            android:id="@+id/reg_password"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editUserPassword"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="textPassword" />
@@ -76,9 +97,9 @@
         android:text="@string/sign_up"
         android:textAllCaps="false"
         android:textColor="@android:color/white"
-        app:layout_constraintEnd_toEndOf="@+id/passwordInput"
-        app:layout_constraintStart_toStartOf="@+id/passwordInput"
-        app:layout_constraintTop_toBottomOf="@+id/passwordInput" />
+        app:layout_constraintEnd_toEndOf="@+id/userPasswordInputContainer"
+        app:layout_constraintStart_toStartOf="@+id/userPasswordInputContainer"
+        app:layout_constraintTop_toBottomOf="@+id/userPasswordInputContainer" />
 
     <TextView
         android:id="@+id/text_already_have"

@@ -1,10 +1,12 @@
 package com.example.calorietrackerfullstack.ui.auth.register
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -45,29 +47,67 @@ class RegisterFragment : Fragment() {
         attachProgressBar()
     }
 
-
     private fun setUpRegister() {
         binding.apply {
             regButton.setOnClickListener {
-                val email = regEmail.text.toString().trim()
-                val password = regPassword.text.toString()
+                Log.d(
+                    "RegisterFragment",
+                    "Sign up clicked"
+                )
 
-                val userCredential = UserAuth(email, password)
-                if (
-                    email.isNotEmpty() &&
-                    password.isNotEmpty()
-                ) {
-                    if (password.length < 6 && !email.isEmailValid()) {
-                        passwordInput.error = getString(R.string.less_password)
-                        emailTextInput.error = getString(R.string.invalid_email)
-                    } else {
-                        viewModel.setUpRegister(userCredential)
-                        emailTextInput.error = null
-                        passwordInput.error = null
-                    }
+                val imm =
+                    context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+
+                val userName = userNameEdit.text.toString().trim()
+                val confirmUserName = confirmUserNameEdit.text.toString().trim()
+                val password = editUserPassword.text.toString()
+                val isUsernameEqual = userName == confirmUserName
+                if (!isUsernameEqual)
+                    confirmUserNameContainer.error = getString(R.string.confirm_username_equal)
+
+                val isUsernameValid = validateUsername(userName)
+                if (!isUsernameValid) userNameContainer.error = getString(R.string.invalid_email)
+
+                val isPasswordValid = validateUserPassword(password)
+                if (!isPasswordValid) { userPasswordInputContainer.error = getString(R.string.less_password) }
+
+                if (isUsernameValid && isPasswordValid && isUsernameEqual) {
+                    val userCredential = UserAuth(userName, password)
+                    viewModel.setUpRegister(userCredential)
+                    userNameContainer.error = null
+                    confirmUserNameContainer.error = null
+                    userPasswordInputContainer.error = null
+                } else {
+                    Toast.makeText(
+                        context,
+                        "Either Username or Password input is not valid",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
+                imm.hideSoftInputFromWindow(it.windowToken, 0)
+                it.clearFocus()
             }
         }
+    }
+
+    private fun validateUsername(username: String): Boolean {
+        var valid = false
+        if (username.isNotEmpty() && !username.startsWith(" ") &&
+            username.contains('@') || username.contains('.')
+        ) {
+            valid = username.isEmailValid()
+        } else if (username.isNotEmpty() && username.length >= 6 && !username.startsWith(" ")) {
+            valid = true
+        }
+        return valid
+    }
+
+    private fun validateUserPassword(password: String): Boolean {
+        var valid = false
+        if (password.isNotEmpty() && password.length >= 6 && !password.startsWith(" ")) {
+            valid = true
+        }
+        return valid
     }
 
     private fun attachRegisterAuth() {

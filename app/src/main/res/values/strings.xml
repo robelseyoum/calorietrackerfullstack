@@ -8,7 +8,9 @@
     <string name="Food_Photo">Food Picture</string>
     <string name="saved_isAdmin">isAdmin</string>
     <string name="login">Login</string>
-    <string name="email">Email</string>
+    <string name="required">Required</string>
+    <string name="username">Username</string>
+    <string name="confirm_username">Confirm Username</string>
     <string name="password">Password</string>
     <string name="don_t_have_account">Don\'t have account</string>
     <string name="sign_up">Sign Up</string>
@@ -39,7 +41,8 @@
     <string name="text_edit">Edit</string>
     <string name="text_add">Add</string>
     <string name="less_password">"Password is less than 6"</string>
-    <string name="invalid_email">"Invalid Email"</string>
+    <string name="invalid_email">"Invalid Email or Username"</string>
+    <string name="confirm_username_equal">"Confirm username is not equal"</string>
 
 
 </resources>

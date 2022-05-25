@@ -19,18 +19,18 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputEmail"
+        android:id="@+id/userNameContainer"
         android:layout_width="@dimen/space_300"
         android:layout_height="@dimen/space_50"
         android:layout_marginTop="@dimen/space_80"
-        android:hint="@string/email"
+        android:hint="@string/username"
         app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_title">
 
-        <EditText
-            android:id="@+id/log_email"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/userNameEdit"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="textEmailAddress" />
@@ -39,18 +39,19 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputPassword"
+        android:id="@+id/passwordContainer"
         android:layout_width="@dimen/space_300"
         android:layout_height="@dimen/space_50"
         android:layout_marginTop="@dimen/space_24"
         android:hint="@string/password"
         app:errorEnabled="true"
+        app:passwordToggleEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputEmail">
+        app:layout_constraintTop_toBottomOf="@+id/userNameContainer">
 
-        <EditText
-            android:id="@+id/log_password"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/passwordEdit"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="textPassword" />
@@ -66,9 +67,9 @@
         android:text="@string/login"
         android:textAllCaps="false"
         android:textColor="@android:color/white"
-        app:layout_constraintEnd_toEndOf="@+id/textInputPassword"
-        app:layout_constraintStart_toStartOf="@+id/textInputPassword"
-        app:layout_constraintTop_toBottomOf="@+id/textInputPassword" />
+        app:layout_constraintEnd_toEndOf="@+id/passwordContainer"
+        app:layout_constraintStart_toStartOf="@+id/passwordContainer"
+        app:layout_constraintTop_toBottomOf="@+id/passwordContainer" />
 
     <TextView
         android:id="@+id/text_signup_title"
