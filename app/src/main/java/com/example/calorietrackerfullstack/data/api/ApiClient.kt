@@ -18,16 +18,16 @@ interface ApiClient {
         @Body user: UserAuth
     ): AuthResponse
 
-    @GET("/food/foods_list")
+    @GET("food/foods_list")
     suspend fun getAllFoods(): FoodsResponse
 
-    @GET("/food/single_food/{id}")
+    @GET("food/single_food/{id}")
     suspend fun getFood(
         @Path("id") id: String,
     ): FoodsResponse
 
     @Multipart
-    @PUT( "/food/food_update/{id}")
+    @PUT( "food/food_update/{id}")
     suspend fun editFood(
         @Path("id") id: String,
         @PartMap foodData: HashMap<String, RequestBody>,

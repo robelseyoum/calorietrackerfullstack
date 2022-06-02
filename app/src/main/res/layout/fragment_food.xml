@@ -30,14 +30,14 @@
             android:fontFamily="serif-monospace"
             android:textColor="@color/link_blue"
             android:textSize="@dimen/text_30"
-            app:layout_constraintBottom_toTopOf="@+id/textInputEmail"
+            app:layout_constraintBottom_toTopOf="@+id/foodTextContainer"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@+id/text_back"
             android:layout_marginLeft="@dimen/space_100"
             />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputEmail"
+            android:id="@+id/foodTextContainer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -60,7 +60,7 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputPassword"
+            android:id="@+id/caloriesTextContainer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/space_16"
@@ -68,7 +68,7 @@
             android:layout_marginEnd="@dimen/space_16"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputEmail">
+            app:layout_constraintTop_toBottomOf="@+id/foodTextContainer">
 
 
             <com.google.android.material.textfield.TextInputEditText
@@ -93,7 +93,7 @@
             app:cardUseCompatPadding="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputPassword">
+            app:layout_constraintTop_toBottomOf="@+id/caloriesTextContainer">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -132,12 +132,13 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout3"
+            android:id="@+id/dateTextContainer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginBottom="@dimen/space_16"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -158,15 +159,17 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout4"
+            android:id="@+id/timeTextContainer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="@dimen/space_16"
             android:layout_marginEnd="@dimen/space_16"
+            android:layout_marginBottom="@dimen/space_32"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
+            app:layout_constraintBottom_toTopOf="@id/submit_btn"
+            app:layout_constraintTop_toBottomOf="@+id/dateTextContainer">
 
 
             <com.google.android.material.textfield.TextInputEditText
@@ -186,6 +189,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/space_32"
+            android:elevation="@dimen/space_8"
+            android:background="@drawable/login_btn_bg"
+            android:enabled="false"
             android:text="@string/submit"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -199,9 +205,8 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="@+id/textInputPassword"
+            app:layout_constraintBottom_toBottomOf="@+id/caloriesTextContainer"
             tools:visibility="visible" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

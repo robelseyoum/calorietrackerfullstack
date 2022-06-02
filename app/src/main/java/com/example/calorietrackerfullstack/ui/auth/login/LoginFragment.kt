@@ -61,9 +61,7 @@ class LoginFragment : Fragment() {
                 if (!isUsernameValid) userNameContainer.error = getString(R.string.invalid_email)
 
                 val isPasswordValid = validateUserPassword(password)
-                if (!isPasswordValid) {
-                    passwordContainer.error = getString(R.string.less_password)
-                }
+                if (!isPasswordValid){ passwordContainer.error = getString(R.string.less_password) }
 
                 if (isUsernameValid && isPasswordValid) {
                     val userCredential = UserAuth(userName, password)

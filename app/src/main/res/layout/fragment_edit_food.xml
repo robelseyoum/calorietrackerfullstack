@@ -165,6 +165,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="@dimen/space_16"
             android:layout_marginEnd="@dimen/space_16"
+            android:layout_marginBottom="@dimen/space_32"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
@@ -188,6 +189,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/space_32"
             android:text="@string/submit"
+            android:elevation="@dimen/space_8"
+            android:background="@drawable/login_btn_bg"
+            android:enabled="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

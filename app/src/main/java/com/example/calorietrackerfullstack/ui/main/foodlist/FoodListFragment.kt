@@ -132,8 +132,12 @@ class FoodListFragment : Fragment(),
 
     private fun setupTodayFoodCalories() {
         val foodDateList = foodList.filter { (it.date == DateUtils.currentDate()) }
-        setupAdaptor(foodDateList)
-        calculateCalories(foodDateList)
+        if (foodDateList.isEmpty()) {
+            binding.textError.visibility = View.VISIBLE
+        } else {
+            setupAdaptor(foodDateList)
+            calculateCalories(foodDateList)
+        }
     }
 
     private fun showDataRangePicker() {
@@ -155,7 +159,7 @@ class FoodListFragment : Fragment(),
             if (startDate != null && endDate != null) {
                 val foodDateList = foodList.filter {
                     (it.date >= DateUtils.convertLongToStringTime(startDate)) &&
-                    (it.date <= DateUtils.convertLongToStringTime(endDate))
+                            (it.date <= DateUtils.convertLongToStringTime(endDate))
                 }
                 setupAdaptor(foodDateList)
             }
