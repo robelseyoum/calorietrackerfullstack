@@ -79,10 +79,10 @@ class EditFoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
 
     private fun setFoodData() {
         binding.apply {
-            etDate.setText(foodItem.date)
-            etTime.setText(foodItem.time)
-            etFoodName.setText(foodItem.foodName)
-            etCaloriesValue.setText(foodItem.calorieValue)
+            dateEdit.setText(foodItem.date)
+            timeEdit.setText(foodItem.time)
+            foodNameEdit.setText(foodItem.foodName)
+            caloriesNameEdit.setText(foodItem.calorieValue)
 
             if (foodItem.foodImage.isNotEmpty()) {
                 Picasso.get().load(
@@ -150,10 +150,10 @@ class EditFoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
 
     private fun checkFormIsNotEmpty(): Boolean {
         binding.apply {
-            food = etFoodName.text.toString()
-            calories = etCaloriesValue.text.toString()
-            date = etDate.text.toString()
-            time = etTime.text.toString()
+            food = foodNameEdit.text.toString()
+            calories = caloriesNameEdit.text.toString()
+            date = dateEdit.text.toString()
+            time = timeEdit.text.toString()
             foodImage = foodItem.foodImage
 
             return if (
@@ -173,10 +173,10 @@ class EditFoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
 
     private fun getFoodUI(): HashMap<String, RequestBody> {
         binding.apply {
-            val food = etFoodName.text.toString()
-            val calories = etCaloriesValue.text.toString()
-            val date = etDate.text.toString()
-            val time = etTime.text.toString()
+            val food = foodNameEdit.text.toString()
+            val calories = caloriesNameEdit.text.toString()
+            val date = dateEdit.text.toString()
+            val time = timeEdit.text.toString()
 
             val map = HashMap<String, RequestBody>()
             map["foodName"] = food.stringToRequestBody()
@@ -249,8 +249,8 @@ class EditFoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
 
     private fun setUpDateAndTime() {
         binding.apply {
-            etDate.setOnClickListener { funDatePicker() }
-            etTime.setOnClickListener { funTimePicker() }
+            dateEdit.setOnClickListener { funDatePicker() }
+            timeEdit.setOnClickListener { funTimePicker() }
         }
     }
 
@@ -278,7 +278,7 @@ class EditFoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
 
     override fun onTimeSet(view: TimePickerDialog?, hourOfDay: Int, minute: Int, second: Int) {
         val time = "$hourOfDay:$minute"
-        binding.etTime.setText(time)
+        binding.timeEdit.setText(time)
     }
 
     override fun onDateSet(
@@ -288,7 +288,7 @@ class EditFoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
         dayOfMonth: Int
     ) {
         val date = dayOfMonth.toString() + SLASH + (monthOfYear + 1) + SLASH + year
-        binding.etDate.setText(date)
+        binding.dateEdit.setText(date)
     }
 
     private fun attachProgressBar() {

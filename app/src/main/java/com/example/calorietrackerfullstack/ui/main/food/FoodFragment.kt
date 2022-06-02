@@ -108,10 +108,10 @@ class FoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
 
     private fun checkFormIsNotEmpty(): Boolean {
         binding.apply {
-            food = etFoodName.text.toString()
-            calories = etCaloriesValue.text.toString()
-            date = etDate.text.toString()
-            time = etTime.text.toString()
+            food = foodNameEdit.text.toString()
+            calories = caloriesNameEdit.text.toString()
+            date = dateEdit.text.toString()
+            time = timeEdit.text.toString()
 
             return if (
                 food.isNotEmpty() &&
@@ -230,8 +230,8 @@ class FoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
 
     private fun setUpDateAndTime() {
         binding.apply {
-            etDate.setOnClickListener { funDatePicker() }
-            etTime.setOnClickListener { funTimePicker() }
+            dateEdit.setOnClickListener { funDatePicker() }
+            timeEdit.setOnClickListener { funTimePicker() }
         }
     }
 
@@ -259,12 +259,12 @@ class FoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
 
     override fun onTimeSet(view: TimePickerDialog?, hourOfDay: Int, minute: Int, second: Int) {
         val time = "$hourOfDay:$minute"
-        binding.etTime.setText(time)
+        binding.timeEdit.setText(time)
     }
 
     override fun onDateSet(view: DatePickerDialog?, year: Int, monthOfYear: Int, dayOfMonth: Int) {
         val date = dayOfMonth.toString() + SLASH + (monthOfYear + 1) + SLASH + year
-        binding.etDate.setText(date)
+        binding.dateEdit.setText(date)
     }
 
 }

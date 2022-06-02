@@ -37,7 +37,7 @@
             />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/foodTextContainer"
+            android:id="@+id/foodNameContainer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -48,7 +48,7 @@
             app:layout_constraintTop_toBottomOf="@+id/text_back">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_food_name"
+                android:id="@+id/foodNameEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Food/Product Name"
@@ -60,7 +60,7 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/caloriesTextContainer"
+            android:id="@+id/caloriesContainer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/space_16"
@@ -68,11 +68,11 @@
             android:layout_marginEnd="@dimen/space_16"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/foodTextContainer">
+            app:layout_constraintTop_toBottomOf="@+id/foodNameContainer">
 
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_calories_value"
+                android:id="@+id/caloriesNameEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
@@ -93,7 +93,7 @@
             app:cardUseCompatPadding="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/caloriesTextContainer">
+            app:layout_constraintTop_toBottomOf="@+id/caloriesContainer">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -146,7 +146,7 @@
 
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_date"
+                android:id="@+id/dateEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:focusable="false"
@@ -173,7 +173,7 @@
 
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_time"
+                android:id="@+id/timeEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:focusable="false"
@@ -205,7 +205,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="@+id/caloriesTextContainer"
+            app:layout_constraintBottom_toBottomOf="@+id/caloriesContainer"
             tools:visibility="visible" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

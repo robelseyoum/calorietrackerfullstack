@@ -38,7 +38,7 @@
             />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputEmail"
+            android:id="@+id/foodNameContainer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -49,7 +49,7 @@
             app:layout_constraintTop_toBottomOf="@+id/text_back">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_food_name"
+                android:id="@+id/foodNameEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Food/Product Name"
@@ -61,7 +61,7 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputPassword"
+            android:id="@+id/caloriesContainer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/space_16"
@@ -69,11 +69,11 @@
             android:layout_marginEnd="@dimen/space_16"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputEmail">
+            app:layout_constraintTop_toBottomOf="@+id/foodNameContainer">
 
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_calories_value"
+                android:id="@+id/caloriesNameEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
@@ -94,7 +94,7 @@
             app:cardUseCompatPadding="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputPassword">
+            app:layout_constraintTop_toBottomOf="@+id/caloriesContainer">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -120,7 +120,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txtGallery" />
 
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -133,7 +132,7 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout3"
+            android:id="@+id/dateTextContainer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -146,7 +145,7 @@
 
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_date"
+                android:id="@+id/dateEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:focusable="false"
@@ -159,7 +158,7 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout4"
+            android:id="@+id/timeTextContainer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -168,11 +167,11 @@
             android:layout_marginBottom="@dimen/space_32"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
+            app:layout_constraintTop_toBottomOf="@+id/dateTextContainer">
 
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_time"
+                android:id="@+id/timeEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:focusable="false"
@@ -201,7 +200,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/textInputPassword"
+            app:layout_constraintBottom_toBottomOf="@+id/caloriesContainer"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
