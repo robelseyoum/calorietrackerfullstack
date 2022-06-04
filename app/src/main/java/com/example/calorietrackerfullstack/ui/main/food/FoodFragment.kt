@@ -92,7 +92,6 @@ class FoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
 
     private fun setUpAddFood() {
         binding.submitBtn.setOnClickListener {
-
             if (this::mPhotoUri.isInitialized) {
                 if (mPhotoUri.toString().isNotEmpty() && checkFormIsNotEmpty()) {
                     viewModel.addFood(
@@ -113,16 +112,34 @@ class FoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
             date = dateEdit.text.toString()
             time = timeEdit.text.toString()
 
-            return if (
-                food.isNotEmpty() &&
-                calories.isNotEmpty() &&
-                date.isNotEmpty() &&
-                time.isNotEmpty()
-            ) {
-                true
-            } else {
-                Toast.makeText(context, "Please fill food form", Toast.LENGTH_SHORT).show()
-                false
+            return when {
+                food.isEmpty() -> {
+                    Toast.makeText(context, "Please fill Food Name is empty", Toast.LENGTH_SHORT).show()
+                    false
+                }
+                food.startsWith(" ") -> {
+                    Toast.makeText(context, "Please fill Food Name is empty", Toast.LENGTH_SHORT).show()
+                    false
+                }
+                calories.isEmpty() -> {
+                    Toast.makeText(context, "Please fill Calories is empty", Toast.LENGTH_SHORT).show()
+                    false
+                }
+                calories.startsWith(" ") -> {
+                    Toast.makeText(context, "Please fill Calories is empty", Toast.LENGTH_SHORT).show()
+                    false
+                }
+                date.isEmpty() -> {
+                    Toast.makeText(context, "Please fill Date is empty", Toast.LENGTH_SHORT).show()
+                    false
+                }
+                time.isEmpty() -> {
+                    Toast.makeText(context, "Please fill Time is empty", Toast.LENGTH_SHORT).show()
+                    false
+                }
+                else -> {
+                    true
+                }
             }
         }
     }

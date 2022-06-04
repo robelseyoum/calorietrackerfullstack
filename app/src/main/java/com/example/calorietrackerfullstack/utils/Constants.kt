@@ -3,7 +3,7 @@ class Constants {
 
     companion object{
 
-        const val BASE_URL = "https://b762-82-36-96-41.ngrok.io" //TODO need to change later //terminal - ngrok http 8080
+        const val BASE_URL = "https://549c-82-36-96-41.ngrok.io" //TODO need to change later //terminal - ngrok http 8080
 //        const val BASE_URL = "https://calorie-server-test.herokuapp.com/" //TODO need to change later //terminal - ngrok http 8080
         const val IMAGE_BASE_URL = "$BASE_URL/images/l/"
 
