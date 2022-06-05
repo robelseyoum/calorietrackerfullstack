@@ -12,7 +12,6 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -21,16 +20,19 @@ import com.example.calorietrackerfullstack.R
 import com.example.calorietrackerfullstack.data.model.Food
 import com.example.calorietrackerfullstack.databinding.FragmentEditFoodBinding
 import com.example.calorietrackerfullstack.utils.*
+import com.example.calorietrackerfullstack.utils.Constants.Companion.COMPRESS_MAX_SIZE
+import com.example.calorietrackerfullstack.utils.Constants.Companion.DATE_PICKER_DIALOG
+import com.example.calorietrackerfullstack.utils.Constants.Companion.FOOD
+import com.example.calorietrackerfullstack.utils.Constants.Companion.MAX_RESULT_SIZE
+import com.example.calorietrackerfullstack.utils.Constants.Companion.SLASH
+import com.example.calorietrackerfullstack.utils.Constants.Companion.TIME_PICKER_DIALOG
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.squareup.picasso.Picasso
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
 import dagger.hilt.android.AndroidEntryPoint
-import okhttp3.MediaType
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import java.util.*
 import kotlin.collections.HashMap
@@ -308,5 +310,3 @@ class EditFoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
             .navigate(R.id.action_editFoodFragment_to_adminFoodReportListFragments)
     }
 }
-
-const val FOOD = "FOOD"

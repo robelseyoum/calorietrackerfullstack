@@ -33,6 +33,8 @@ data class FoodsResponse(
 )
 
 data class FoodResponse(
+    @SerializedName("error")
+    val error: String?,
     @SerializedName("data")
     val data: String,
     @SerializedName("success")

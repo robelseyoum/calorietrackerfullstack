@@ -1,10 +1,12 @@
 package com.example.calorietrackerfullstack.utils
+
 class Constants {
 
-    companion object{
+    companion object {
 
-        const val BASE_URL = "https://549c-82-36-96-41.ngrok.io" //TODO need to change later //terminal - ngrok http 8080
-//        const val BASE_URL = "https://calorie-server-test.herokuapp.com/" //TODO need to change later //terminal - ngrok http 8080
+        const val BASE_URL = "https://0ee6-82-36-96-41.ngrok.io" //TODO need to change later //terminal - ngrok http 8080
+
+        //        const val BASE_URL = "https://calorie-server-test.herokuapp.com/" //TODO need to change later //terminal - ngrok http 8080
         const val IMAGE_BASE_URL = "$BASE_URL/images/l/"
 
         const val TAG: String = "AppDebug"
@@ -18,7 +20,7 @@ class Constants {
         const val PERMISSIONS_REQUEST_READ_STORAGE: Int = 301
         const val BASE_URL_RANDOM_USER = "https://randomuser.me/"
         const val ERROR_UNKNOWN = "Unknown error"
-        const val NETWORK_ERROR= "IOException"
+        const val NETWORK_ERROR = "IOException"
         const val NETWORK_ERROR_UNKNOWN = "Unknown network error"
         const val NETWORK_ERROR_TIMEOUT = "Network timeout"
 
@@ -28,6 +30,13 @@ class Constants {
         const val F_FIELD_EMAIL = "Email"
         const val F_FIELD_IS_ADMIN = "isAdmin"
         const val IS_ADMIN = "isAdmin"
+
+        const val FOOD = "FOOD"
+        const val SLASH = "-"
+        const val TIME_PICKER_DIALOG = "TimepickerDialog"
+        const val DATE_PICKER_DIALOG = "Datepickerdialog"
+        const val COMPRESS_MAX_SIZE = 1024
+        const val MAX_RESULT_SIZE = 1080
 
     }
 }

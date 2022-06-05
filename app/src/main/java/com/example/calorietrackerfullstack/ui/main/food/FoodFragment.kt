@@ -20,6 +20,11 @@ import com.example.calorietrackerfullstack.R
 import com.example.calorietrackerfullstack.databinding.FragmentFoodBinding
 import com.example.calorietrackerfullstack.ui.main.foodlist.USER_ID
 import com.example.calorietrackerfullstack.utils.*
+import com.example.calorietrackerfullstack.utils.Constants.Companion.COMPRESS_MAX_SIZE
+import com.example.calorietrackerfullstack.utils.Constants.Companion.DATE_PICKER_DIALOG
+import com.example.calorietrackerfullstack.utils.Constants.Companion.MAX_RESULT_SIZE
+import com.example.calorietrackerfullstack.utils.Constants.Companion.SLASH
+import com.example.calorietrackerfullstack.utils.Constants.Companion.TIME_PICKER_DIALOG
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
@@ -283,11 +288,4 @@ class FoodFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
         val date = dayOfMonth.toString() + SLASH + (monthOfYear + 1) + SLASH + year
         binding.dateEdit.setText(date)
     }
-
 }
-
-const val SLASH = "-"
-const val TIME_PICKER_DIALOG = "TimepickerDialog"
-const val DATE_PICKER_DIALOG = "Datepickerdialog"
-const val COMPRESS_MAX_SIZE = 1024
-const val MAX_RESULT_SIZE = 1080
